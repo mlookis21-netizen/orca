@@ -5,288 +5,414 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#111216">
-<meta name="description" content="IOSORCA — portal informasi dan katalog dengan akun pengguna.">
-<title>IOSORCA — Portal</title>
+<meta name="description" content="IOSORCA — portal katalog game dan provider dengan tampilan hitam emas.">
+<title>IOSORCA — Game & Provider</title>
 
 <style>
 :root {
-  --bg:#101115;
-  --surface:#191a20;
-  --surface2:#22242c;
-  --border:#343640;
-  --gold:#f2c64b;
-  --gold2:#d9a72e;
-  --text:#f6f6f7;
-  --muted:#a7a9b4;
-  --success:#57d69b;
-  --danger:#ff7474;
+  --bg: #0d0e11;
+  --card: #17191f;
+  --card2: #22252d;
+  --border: #343843;
+  --gold: #f2c64b;
+  --gold2: #dba52d;
+  --text: #f7f7f8;
+  --muted: #aeb3bf;
+  --green: #58d68d;
+  --radius: 14px;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at 50% -20%, #29210e, transparent 42%), var(--bg);
+  color: var(--text);
+  font-family: Inter, Arial, Helvetica, sans-serif;
 }
-button,input,select,textarea{font:inherit}
-button,a{-webkit-tap-highlight-color:transparent}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
-button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,a:focus-visible{
-  outline:2px solid var(--gold);outline-offset:3px
-}
-.container{max-width:1150px;margin:auto;padding:0 16px}
-.muted{color:var(--muted)}
-.small{font-size:12px;line-height:1.7}
-.gold{color:var(--gold)}
-.hidden{display:none!important}
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+[hidden] { display: none !important; }
 
-/* HEADER */
-.header{
-  position:sticky;top:0;z-index:100;
-  background:#15161bee;backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--border)
+.notice-top {
+  padding: 9px 12px;
+  text-align: center;
+  background: linear-gradient(90deg, #dba52d, #ffe58a, #dba52d);
+  color: #17130a;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1px;
 }
-.header-inner{
-  max-width:1150px;margin:auto;padding:13px 16px;
-  display:flex;align-items:center;gap:18px
+.container { width: min(1150px, 100%); margin: auto; padding: 0 18px; }
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #111216ef;
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
 }
-.logo{font-size:25px;font-weight:900;letter-spacing:1px;white-space:nowrap}
-.logo span{color:var(--gold)}
-.logo small{display:block;font-size:9px;color:var(--muted);letter-spacing:2px;margin-top:4px}
-.nav{display:flex;gap:4px;flex:1}
-.nav button{
-  border:0;background:transparent;color:#ddd;padding:11px 10px;
-  border-radius:8px;font-size:12px;font-weight:800
+.header-inner {
+  max-width: 1150px;
+  margin: auto;
+  padding: 13px 18px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
-.nav button:hover,.nav button.active{background:#352c18;color:var(--gold)}
-.menu-toggle{display:none}
-.btn{
-  border:1px solid transparent;border-radius:8px;padding:11px 15px;
-  font-size:12px;font-weight:800;transition:transform .18s,opacity .18s
+.logo { font-size: 25px; font-weight: 1000; letter-spacing: 1.4px; white-space: nowrap; }
+.logo span { color: var(--gold); }
+.logo small {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  margin-top: 4px;
 }
-.btn:hover{transform:translateY(-1px)}
-.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
-.btn-gold{background:linear-gradient(180deg,#ffe58a,var(--gold2));color:#18140a}
-.btn-dark{background:var(--surface2);color:white;border-color:var(--border)}
-.btn-danger{background:#492427;color:#ffbfc1;border-color:#74393d}
+.nav { display: flex; gap: 4px; flex: 1; }
+.nav button {
+  border: 1px solid transparent;
+  background: transparent;
+  color: #d8d9df;
+  padding: 11px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.nav button:hover, .nav button.active {
+  background: #342b17;
+  color: var(--gold);
+  border-color: #6b5520;
+}
+.header-actions { display: flex; gap: 8px; }
+.menu-toggle {
+  display: none;
+  background: var(--card2);
+  color: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.btn {
+  padding: 11px 15px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 11px;
+  transition: transform .18s, filter .18s;
+}
+.btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.btn:disabled { opacity: .55; cursor: wait; transform: none; }
+.btn-gold {
+  background: linear-gradient(180deg, #ffe995, var(--gold2));
+  color: #18140a;
+}
+.btn-dark { background: var(--card2); color: white; border-color: var(--border); }
 
-/* LAYOUT */
-.page{display:none;min-height:55vh}
-.page.active{display:block;animation:appear .2s ease}
-@keyframes appear{from{opacity:.5;transform:translateY(3px)}to{opacity:1;transform:none}}
-.hero{
-  margin:22px 0;display:grid;grid-template-columns:1.4fr .8fr;gap:14px
+.hero {
+  display: grid;
+  grid-template-columns: 1.4fr .8fr;
+  gap: 15px;
+  margin: 23px 0;
 }
-.hero-main{
-  min-height:250px;padding:30px;position:relative;overflow:hidden;
-  border:1px solid #6b5520;border-radius:14px;
-  background:radial-gradient(circle at 85% 40%,#70541e,transparent 43%),
-  linear-gradient(120deg,#2b220f,#171717)
+.hero-main {
+  min-height: 270px;
+  padding: clamp(23px, 4vw, 36px);
+  border: 1px solid #71591f;
+  border-radius: var(--radius);
+  background: radial-gradient(circle at 85% 45%, #72551c, transparent 43%), linear-gradient(120deg, #2b220f, #171717 78%);
+  position: relative;
+  overflow: hidden;
 }
-.eyebrow{color:var(--gold);font-size:11px;font-weight:900;letter-spacing:2px}
-.hero h1{font-size:clamp(29px,4vw,44px);line-height:1.12;margin:15px 0}
-.hero p{max-width:520px;color:#d0c9b8;line-height:1.8;font-size:14px}
-.hero-symbol{position:absolute;right:20px;bottom:-27px;color:#f2c64b20;font-size:160px;pointer-events:none}
-.hero-side{display:grid;gap:12px}
-.promo,.panel,.stat,.game-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:11px
+.eyebrow { color: var(--gold); font-size: 10px; font-weight: 1000; letter-spacing: 2px; }
+.hero h1 { font-size: clamp(29px, 4vw, 46px); line-height: 1.08; margin: 16px 0; }
+.hero p { max-width: 520px; color: #d0c9b8; line-height: 1.75; font-size: 13px; }
+.hero-symbol { position: absolute; right: 25px; bottom: -28px; color: #f2c64b20; font-size: 180px; pointer-events: none; }
+.hero-main > *:not(.hero-symbol) { position: relative; z-index: 1; }
+.hero-side { display: grid; gap: 12px; }
+.promo {
+  background: linear-gradient(135deg, #25272e, #15161a);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
 }
-.promo{padding:20px}
-.promo-icon{font-size:25px;color:var(--gold)}
-.promo strong{display:block;margin:9px 0}
-.promo p{font-size:12px;color:var(--muted);line-height:1.7}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:26px}
-.stat{padding:16px}
-.stat strong{display:block;font-size:13px}
-.stat small{display:block;color:var(--muted);font-size:11px;margin-top:7px}
-.section{margin:27px 0}
-.section-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
-.section-header h2{font-size:20px;margin:0}
-.section-header p{font-size:12px;color:var(--muted)}
-.text-link{color:var(--gold);background:none;border:0;font-size:12px;font-weight:900}
-.page-title{font-size:28px;margin:27px 0 10px}
-.description{font-size:14px;color:var(--muted);line-height:1.8;max-width:820px}
-.panel{margin:18px 0;overflow:hidden}
-.panel-title{padding:16px;border-bottom:1px solid var(--border);font-weight:900}
-.panel-body{padding:17px}
-.two-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.info-list{list-style:none;padding:0;margin:0}
-.info-list li{padding:12px 0;border-bottom:1px solid var(--border);font-size:13px}
-.info-list li:last-child{border-bottom:0}
-.info-list a:hover{color:var(--gold)}
-.notice{
-  padding:14px;background:#302817;border:1px solid #6b5520;color:#e7d7a4;
-  border-radius:8px;font-size:12px;line-height:1.8
-}
+.promo-icon { font-size: 24px; color: var(--gold); }
+.promo strong { display: block; margin: 9px 0; font-size: 13px; }
+.promo p { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 0; }
 
-/* CATALOG */
-.categories{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px}
-.category{
-  flex-shrink:0;background:var(--surface);border:1px solid var(--border);
-  color:white;border-radius:8px;padding:11px 15px;font-size:12px;font-weight:800
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 11px; margin-bottom: 28px; }
+.stat { background: linear-gradient(145deg, #1b1d23, #15161b); border: 1px solid var(--border); border-radius: 11px; padding: 16px; }
+.stat strong { display: block; font-size: 12px; }
+.stat small { display: block; color: var(--muted); font-size: 10px; margin-top: 7px; }
+.section { margin: 29px 0; }
+.section-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 15px; }
+.section-header h2 { font-size: 20px; margin: 0; }
+.section-header p { font-size: 12px; color: var(--muted); margin: 7px 0 0; }
+.text-link, .link-button {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 900;
+  background: transparent;
+  border: 0;
 }
-.category.active,.category:hover{color:var(--gold);border-color:var(--gold2);background:#342b17}
-.toolbar{display:flex;gap:10px;margin:14px 0}
-.search{flex:1}
-.search input,.sort,.field input,.field textarea,.field select{
-  width:100%;background:#111216;color:white;border:1px solid var(--border);
-  padding:13px;border-radius:8px;outline:none
+.categories { display: flex; gap: 8px; overflow-x: auto; padding: 2px 1px 10px; }
+.category {
+  flex-shrink: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: white;
+  border-radius: 9px;
+  padding: 11px 15px;
+  font-size: 11px;
+  font-weight: 900;
 }
-.search input:focus,.field input:focus,.field textarea:focus{border-color:var(--gold)}
-.sort{max-width:180px;background:var(--surface)}
-.game-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
-.game-card{min-width:0;overflow:hidden;transition:transform .18s,border-color .18s}
-.game-card:hover{transform:translateY(-3px);border-color:var(--gold2)}
-.game-art{
-  height:125px;display:grid;place-items:center;position:relative;
-  background:radial-gradient(circle,var(--art),#17181d 75%);font-size:43px
+.category.active, .category:hover { color: var(--gold); border-color: var(--gold2); background: #342b17; }
+.toolbar { display: flex; gap: 10px; margin: 15px 0; }
+.search { flex: 1; }
+.search input, .sort {
+  width: 100%;
+  background: var(--card);
+  color: white;
+  border: 1px solid var(--border);
+  padding: 13px;
+  border-radius: 9px;
+  outline: none;
 }
-.game-badge{
-  position:absolute;top:8px;left:8px;background:var(--gold);color:#17130a;
-  padding:5px 7px;border-radius:4px;font-size:9px;font-weight:900
+.sort { max-width: 190px; }
+.game-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 13px; }
+.game-card {
+  min-width: 0;
+  overflow: hidden;
+  background: linear-gradient(150deg, #1b1d23, #15161a);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: transform .2s, border-color .2s;
 }
-.game-info{padding:11px}
-.game-name{font-size:12px;font-weight:900}
-.game-provider{margin-top:6px;color:var(--muted);font-size:10px}
-.game-action{
-  margin-top:12px;width:100%;padding:10px;background:#302817;color:var(--gold);
-  border:1px solid #65501f;border-radius:6px;font-size:10px;font-weight:900
+.game-card:hover { transform: translateY(-4px); border-color: var(--gold2); }
+.game-art {
+  height: 128px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background: radial-gradient(circle, var(--art), #17181d 75%);
+  font-size: 44px;
 }
-.empty{display:none;padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:10px}
+.game-badge {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  background: var(--gold);
+  color: #17130a;
+  padding: 5px 7px;
+  border-radius: 5px;
+  font-size: 8px;
+  font-weight: 1000;
+}
+.game-info { padding: 12px; }
+.game-name { font-size: 12px; font-weight: 900; overflow-wrap: anywhere; }
+.game-provider { margin-top: 6px; color: var(--muted); font-size: 10px; }
+.game-action {
+  margin-top: 13px;
+  width: 100%;
+  padding: 10px;
+  background: #302817;
+  color: var(--gold);
+  border: 1px solid #65501f;
+  border-radius: 7px;
+  font-size: 9px;
+  font-weight: 1000;
+}
+.empty { display: none; padding: 30px; text-align: center; color: var(--muted); border: 1px dashed var(--border); border-radius: 10px; }
 
-/* FORMS AND ACCOUNT */
-.form{max-width:540px}
-.field{margin:15px 0}
-.field label{display:block;font-size:12px;font-weight:800;margin-bottom:8px}
-.field input,.field textarea{display:block;margin-top:8px}
-.field textarea{min-height:115px;resize:vertical}
-.field-note{font-size:11px;color:var(--muted);line-height:1.7;margin-top:6px}
-.form-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
-.form-message{
-  display:none;margin-top:13px;padding:12px;border-radius:8px;
-  background:#302817;border:1px solid #6b5520;color:var(--gold);
-  font-size:12px;line-height:1.7;overflow-wrap:anywhere
+.page { display: none; min-height: 350px; animation: fadeIn .22s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: .55; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+.page-title { font-size: clamp(25px, 4vw, 32px); margin: 28px 0 10px; }
+.description { font-size: 13px; color: var(--muted); line-height: 1.8; max-width: 800px; }
+.panel { margin: 18px 0; background: linear-gradient(145deg, #1b1d23, #15161a); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.panel-title { padding: 16px; border-bottom: 1px solid var(--border); font-weight: 900; font-size: 13px; }
+.panel-body { padding: 17px; }
+.two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.info-list { list-style: none; padding: 0; margin: 0; }
+.info-list li { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+.info-list li:last-child { border-bottom: 0; }
+.info-list a:hover { color: var(--gold); }
+.notice {
+  padding: 14px;
+  background: #302817;
+  border: 1px solid #6b5520;
+  color: #e7d7a4;
+  border-radius: 9px;
+  font-size: 11px;
+  line-height: 1.7;
 }
-.form-message.error{background:#3c2023;border-color:#74393d;color:#ffbfc1}
-.form-message.success{background:#173528;border-color:#286d4d;color:#8ef0bd}
-.account-box{padding:15px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;overflow-wrap:anywhere}
-.account-box p{font-size:13px;line-height:1.8}
-.tabs{display:flex;gap:8px;flex-wrap:wrap}
-.tab{
-  border:1px solid var(--border);background:var(--surface2);color:white;
-  padding:10px 13px;border-radius:8px;font-size:12px;font-weight:800
+.form { max-width: 530px; }
+.form label, .auth-form label { display: block; font-size: 11px; margin: 14px 0; color: #d7d8dd; }
+.form input, .form textarea, .auth-form input {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  color: white;
+  background: #101115;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
 }
-.tab.active{color:var(--gold);border-color:var(--gold2);background:#342b17}
-hr{border:0;border-top:1px solid var(--border);margin:17px 0}
-details{padding:13px 0}
-summary{cursor:pointer;font-size:13px;font-weight:800}
-details p{margin-top:12px}
+.form textarea { min-height: 110px; resize: vertical; }
+.form input:focus, .form textarea:focus, .auth-form input:focus, .search input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px #f2c64b12;
+}
+.message { display: none; margin-top: 12px; padding: 12px; background: #302817; border: 1px solid #6b5520; border-radius: 8px; color: var(--gold); font-size: 11px; line-height: 1.6; }
+.message.error { background: #321d20; border-color: #70373d; color: #ffb3b3; }
+.message.success { background: #173024; border-color: #2f6948; color: #a7f3c2; }
+.footer { border-top: 1px solid var(--border); margin-top: 42px; padding: 27px 0 35px; color: #9296a0; font-size: 11px; line-height: 1.8; }
+.footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 20px; }
+.footer-title { font-weight: 900; color: white; margin-bottom: 8px; }
+.bottom-nav { display: none; }
+details { padding: 11px 0; }
+summary { cursor: pointer; font-weight: 800; font-size: 12px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 8px 0; }
 
-/* FOOTER AND MOBILE */
-.footer{border-top:1px solid var(--border);margin-top:40px;padding:25px 0 35px;color:#9296a0;font-size:12px;line-height:1.8}
-.footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:20px}
-.footer-title{font-weight:900;color:white;margin-bottom:8px}
-.footer-links{display:grid;gap:7px}
-.footer-links a:hover{color:var(--gold)}
-.bottom-nav{display:none}
-@media(max-width:950px){.game-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.nav button{padding:10px 7px}}
-@media(max-width:720px){
-  .header-inner{gap:10px}
-  .menu-toggle{display:block;margin-left:auto;background:var(--surface2);color:white;border:1px solid var(--border);border-radius:8px;padding:10px}
-  .nav{display:none;position:absolute;top:100%;left:0;right:0;padding:12px;background:#17181c;border-bottom:1px solid var(--border);flex-direction:column}
-  .nav.open{display:flex}
-  .nav button{text-align:left;padding:13px}
-  .header-actions{display:none}
-  .hero{grid-template-columns:1fr}
-  .hero-main{padding:23px}
-  .hero-side{grid-template-columns:1fr 1fr}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .game-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-  .game-art{height:100px}
-  .two-columns{grid-template-columns:1fr}
-  .bottom-nav{position:fixed;display:flex;z-index:90;bottom:0;left:0;right:0;justify-content:space-around;padding:8px 3px;background:#17181cee;border-top:1px solid var(--border)}
-  .bottom-nav button{background:transparent;color:var(--muted);border:0;font-size:10px;padding:5px}
-  body{padding-bottom:65px}
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: #000b;
+  backdrop-filter: blur(8px);
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
 }
-@media(max-width:430px){
-  .container{padding:0 11px}
-  .logo{font-size:22px}
-  .game-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .game-art{height:120px}
-  .toolbar{flex-direction:column}
-  .sort{max-width:none}
-  .footer-grid{grid-template-columns:1fr}
+.modal-backdrop.open { display: flex; }
+.modal {
+  width: min(460px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  background: #181a20;
+  border: 1px solid #66521f;
+  border-radius: 16px;
 }
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+.modal-head { display: flex; align-items: center; justify-content: space-between; padding: 19px 20px; border-bottom: 1px solid var(--border); }
+.modal-head h2 { font-size: 17px; margin: 0; }
+.modal-close { background: transparent; color: #c9cbd2; border: 1px solid var(--border); border-radius: 7px; width: 34px; height: 34px; font-size: 19px; }
+.modal-body { padding: 20px; }
+.auth-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; background: #101115; padding: 5px; border-radius: 9px; margin-bottom: 17px; }
+.auth-tabs button { background: transparent; border: 0; color: var(--muted); padding: 10px; border-radius: 7px; font-size: 11px; font-weight: 900; }
+.auth-tabs button.active { background: #3a3019; color: var(--gold); }
+.auth-form { display: none; }
+.auth-form.active { display: block; }
+.auth-form .btn { width: 100%; margin-top: 6px; }
+.auth-help { display: flex; justify-content: space-between; gap: 10px; margin-top: 13px; font-size: 11px; color: var(--muted); flex-wrap: wrap; }
+.account-summary { padding: 13px; background: #101115; border: 1px solid var(--border); border-radius: 9px; font-size: 12px; line-height: 1.8; overflow-wrap: anywhere; }
+.account-summary strong { color: var(--gold); }
+.account-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+
+@media (max-width: 950px) {
+  .game-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .nav button { padding: 10px 7px; }
+}
+@media (max-width: 720px) {
+  .header-inner { flex-wrap: wrap; gap: 10px; }
+  .logo { font-size: 22px; }
+  .menu-toggle { display: block; margin-left: auto; }
+  .header-actions { order: 3; }
+  .nav { display: none; order: 4; flex-basis: 100%; flex-direction: column; padding-bottom: 8px; }
+  .nav.open { display: flex; }
+  .nav button { text-align: left; padding: 12px; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-main { min-height: 245px; }
+  .hero-side { grid-template-columns: 1fr 1fr; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .game-art { height: 110px; }
+  .two-columns { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 150;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: #111216f5;
+    border-top: 1px solid var(--border);
+    padding: 7px 4px calc(7px + env(safe-area-inset-bottom));
+    backdrop-filter: blur(14px);
+  }
+  .bottom-nav button { background: transparent; color: var(--muted); border: 0; font-size: 10px; line-height: 1.7; }
+  .bottom-nav button.active { color: var(--gold); }
+  body { padding-bottom: 66px; }
+}
+@media (max-width: 400px) {
+  .hero-side { grid-template-columns: 1fr; }
+  .toolbar { flex-direction: column; }
+  .sort { max-width: none; }
+  .footer-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 
 <body>
+<div class="notice-top">IOSORCA • KATALOG REFERENSI • BUKAN LAYANAN TRANSAKSI</div>
 
 <header class="header">
   <div class="header-inner">
-    <a href="#home" class="logo" data-page="home">
-      IOSOR<span>CA</span>
-      <small>INFORMASI · KATALOG · AKUN</small>
-    </a>
-
-    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false">☰ MENU</button>
-
+    <a class="logo" href="#home" data-page="home">IOSO<span>RCA</span><small>GAME & PROVIDER DIRECTORY</small></a>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="Buka menu">☰</button>
     <nav class="nav" id="navigation" aria-label="Navigasi utama">
       <button class="active" data-page="home">⌂ Beranda</button>
       <button data-page="games">▦ Katalog</button>
-      <button data-page="popular">★ Pilihan</button>
-      <button data-page="information">▤ Informasi</button>
-      <button data-page="help">? Bantuan</button>
-      <button data-page="contact">✉ Kontak</button>
+      <button data-page="popular">★ Populer</button>
+      <button data-page="information">Informasi</button>
+      <button data-page="help">Bantuan</button>
+      <button data-page="contact">Kontak</button>
     </nav>
-
     <div class="header-actions">
-      <button class="btn btn-gold" data-page="account">MASUK / DAFTAR</button>
+      <button class="btn btn-gold" id="accountButton">👤 Akun / Login</button>
     </div>
   </div>
 </header>
 
 <main class="container">
-
-  <!-- BERANDA -->
   <section class="page active" id="page-home">
     <div class="hero">
       <div class="hero-main">
         <div class="eyebrow">SELAMAT DATANG DI IOSORCA</div>
-        <h1>Jelajahi Dunia<br>Dalam Satu Portal</h1>
-        <p>Temukan katalog, akses akun, dan jelajahi informasi dalam tampilan modern yang nyaman di HP maupun laptop.</p>
+        <h1>Jelajahi Game<br>dan Provider.</h1>
+        <p>Temukan katalog referensi permainan dalam antarmuka modern dengan tema hitam dan emas. Cari nama game, provider, atau kategori dengan mudah.</p>
         <button class="btn btn-gold" data-go="games">JELAJAHI KATALOG →</button>
-        <div class="hero-symbol" aria-hidden="true">✦</div>
+        <div class="hero-symbol">✦</div>
       </div>
-
       <div class="hero-side">
         <div class="promo">
-          <div class="promo-icon">◈</div>
-          <strong>Desain Premium</strong>
-          <p>Tampilan hitam dan emas dengan tata letak responsif.</p>
+          <div class="promo-icon">✧</div>
+          <strong>Eksplorasi Katalog</strong>
+          <p>Gunakan pencarian dan kategori untuk menjelajahi daftar referensi.</p>
         </div>
         <div class="promo">
           <div class="promo-icon">♙</div>
-          <strong>Akun Pengguna</strong>
-          <p>Pendaftaran dan autentikasi menggunakan Supabase.</p>
-          <button class="btn btn-dark" data-go="account">BUKA AKUN</button>
+          <strong>Akun IOSORCA</strong>
+          <p>Daftar dan masuk melalui autentikasi Supabase.</p>
+          <button class="text-link" id="openAccountFromPromo">BUKA AKUN →</button>
         </div>
       </div>
     </div>
 
     <div class="stats">
-      <div class="stat"><strong>▦ Katalog</strong><small>Daftar pilihan</small></div>
-      <div class="stat"><strong>⌕ Pencarian</strong><small>Cari berdasarkan nama</small></div>
-      <div class="stat"><strong>♙ Akun</strong><small>Login dan pendaftaran</small></div>
-      <div class="stat"><strong>◉ Responsif</strong><small>HP dan laptop</small></div>
+      <div class="stat"><strong id="gameCount">20</strong><small>Entri referensi</small></div>
+      <div class="stat"><strong>Hitam + Emas</strong><small>Tema antarmuka</small></div>
+      <div class="stat"><strong>Responsif</strong><small>HP dan laptop</small></div>
+      <div class="stat"><strong>Supabase</strong><small>Autentikasi akun</small></div>
     </div>
 
     <section class="section">
       <div class="section-header">
-        <div><h2>Katalog Pilihan</h2><p>Jelajahi daftar yang tersedia.</p></div>
+        <div><h2>Pilihan Game & Provider</h2><p>Contoh katalog dari berbagai kategori.</p></div>
         <button class="text-link" data-go="games">LIHAT SEMUA →</button>
       </div>
       <div class="game-grid" id="featuredGrid"></div>
@@ -296,7 +422,8 @@ details p{margin-top:12px}
       <section class="panel">
         <div class="panel-title">Tentang IOSORCA</div>
         <div class="panel-body">
-          <p class="description">IOSORCA memiliki antarmuka katalog, navigasi halaman, dan akses akun. Konten katalog saat ini merupakan daftar awal yang dapat diganti dengan data asli milikmu.</p>
+          <p class="description">IOSORCA adalah portal katalog referensi yang dapat dikembangkan dengan akun, profil, katalog dinamis, dan fitur tambahan.</p>
+          <div class="notice">Katalog ini belum terhubung ke game, provider resmi, akun taruhan, atau transaksi.</div>
         </div>
       </section>
       <section class="panel">
@@ -304,334 +431,305 @@ details p{margin-top:12px}
         <div class="panel-body">
           <ul class="info-list">
             <li><a href="#games" data-page="games">Buka katalog</a></li>
-            <li><a href="#popular" data-page="popular">Lihat pilihan</a></li>
-            <li><a href="#account" data-page="account">Masuk atau daftar akun</a></li>
+            <li><a href="#popular" data-page="popular">Pilihan populer</a></li>
+            <li><a href="#information" data-page="information">Informasi</a></li>
             <li><a href="#help" data-page="help">Pusat bantuan</a></li>
+            <li><a href="#contact" data-page="contact">Kontak</a></li>
           </ul>
         </div>
       </section>
     </div>
   </section>
 
-  <!-- KATALOG -->
   <section class="page" id="page-games">
-    <h1 class="page-title">Katalog</h1>
-    <p class="description">Cari dan urutkan daftar berdasarkan kategori. Tombol detail menampilkan informasi item; item belum ditautkan ke layanan eksternal.</p>
-
+    <h1 class="page-title">Katalog Game & Provider</h1>
+    <p class="description">Cari nama game atau provider, lalu pilih kategori yang ingin ditampilkan. Semua kartu di sini hanya berupa referensi.</p>
+    <div class="notice">Nama game dan provider hanya contoh referensi, bukan pernyataan afiliasi resmi. Tombol detail tidak membuka permainan dan tidak memproses transaksi. Patuhi hukum setempat dan batas usia yang berlaku.</div>
     <div class="categories">
       <button class="category active" data-category="Semua">Semua</button>
-      <button class="category" data-category="Strategi">Strategi</button>
-      <button class="category" data-category="Puzzle">Puzzle</button>
-      <button class="category" data-category="Arcade">Arcade</button>
+      <button class="category" data-category="Slot">Slot</button>
+      <button class="category" data-category="Live Casino">Live Casino</button>
+      <button class="category" data-category="Meja">Permainan Meja</button>
       <button class="category" data-category="Kartu">Kartu</button>
-      <button class="category" data-category="Kasual">Kasual</button>
+      <button class="category" data-category="Arcade">Arcade</button>
     </div>
-
     <div class="toolbar">
-      <div class="search"><input id="searchInput" type="search" placeholder="Cari katalog..." aria-label="Cari katalog"></div>
+      <div class="search"><input id="searchInput" type="search" placeholder="Cari game atau provider..." aria-label="Cari game atau provider"></div>
       <select class="sort" id="sortSelect" aria-label="Urutkan katalog">
         <option value="default">Urutan awal</option>
         <option value="az">Nama A–Z</option>
         <option value="za">Nama Z–A</option>
       </select>
     </div>
-
     <div class="game-grid" id="allGamesGrid"></div>
-    <div class="empty" id="emptyState">Tidak ada item yang cocok dengan pencarian.</div>
+    <div class="empty" id="emptyState">Tidak ada kartu yang cocok dengan pencarianmu.</div>
   </section>
 
-  <!-- PILIHAN -->
   <section class="page" id="page-popular">
-    <h1 class="page-title">Pilihan</h1>
-    <p class="description">Daftar pilihan berdasarkan urutan yang ditentukan pada kode website.</p>
+    <h1 class="page-title">Pilihan Populer</h1>
+    <p class="description">Kumpulan contoh dari beberapa kategori. Urutan ini bukan statistik pengguna atau rekomendasi taruhan.</p>
     <div class="game-grid" id="popularGrid"></div>
   </section>
 
-  <!-- INFORMASI -->
   <section class="page" id="page-information">
     <h1 class="page-title">Informasi</h1>
     <div class="two-columns">
       <section class="panel">
         <div class="panel-title">Tentang Website</div>
-        <div class="panel-body">
-          <p class="description">Halaman informasi untuk menjelaskan tujuan IOSORCA, pembaruan, dan panduan pengguna.</p>
-        </div>
+        <div class="panel-body"><p class="description">IOSORCA merupakan proyek portal katalog dengan desain responsif. Fitur selanjutnya dapat dikembangkan sesuai kebutuhan.</p></div>
       </section>
       <section class="panel">
-        <div class="panel-title">Fitur yang tersedia</div>
+        <div class="panel-title">Fitur Saat Ini</div>
         <div class="panel-body">
           <ul class="info-list">
-            <li>✓ Navigasi responsif</li>
-            <li>✓ Pencarian dan kategori</li>
-            <li>✓ Pendaftaran akun Supabase</li>
-            <li>✓ Login dan logout</li>
-            <li>✓ Pemulihan kata sandi</li>
+            <li>✓ Desain responsif hitam dan emas</li>
+            <li>✓ Navigasi halaman internal</li>
+            <li>✓ Pencarian game dan provider</li>
+            <li>✓ Filter kategori</li>
+            <li>✓ Pengurutan A–Z dan Z–A</li>
+            <li>✓ Pendaftaran dan login Supabase</li>
+            <li>✓ Pemulihan kata sandi melalui email</li>
           </ul>
         </div>
       </section>
     </div>
+    <div class="notice">Pendaftaran menggunakan username, email, nomor HP, dan kata sandi. Nomor HP disimpan sebagai metadata/profil dan tidak diverifikasi menggunakan OTP SMS oleh kode ini.</div>
   </section>
 
-  <!-- BANTUAN -->
   <section class="page" id="page-help">
     <h1 class="page-title">Pusat Bantuan</h1>
     <section class="panel">
       <div class="panel-title">Pertanyaan Umum</div>
       <div class="panel-body">
-        <details open>
-          <summary>Apakah akun terhubung ke server?</summary>
-          <p class="description">Fitur akun menggunakan Supabase jika konfigurasi proyek dan kebijakan database sudah benar.</p>
-        </details>
+        <details open><summary>Apakah akun tersambung ke server?</summary><p class="description">Formulir autentikasi menggunakan Supabase. Login menggunakan username memerlukan Edge Function yang dipasang dan dikonfigurasi secara terpisah.</p></details>
         <hr>
-        <details>
-          <summary>Apakah login username langsung tersedia?</summary>
-          <p class="description">Login email dan kata sandi menggunakan Supabase Auth. Login username memerlukan Edge Function bernama iosorca-username-login yang harus dipasang di proyek Supabase.</p>
-        </details>
+        <details><summary>Apakah game sudah bisa dimainkan?</summary><p class="description">Belum. Katalog ini berisi data referensi lokal dan tidak terhubung ke permainan atau transaksi.</p></details>
         <hr>
-        <details>
-          <summary>Kenapa pendaftaran bisa gagal?</summary>
-          <p class="description">Pastikan URL dan publishable key benar, email belum digunakan, kata sandi memenuhi syarat, serta trigger profil Supabase sesuai struktur database.</p>
-        </details>
+        <details><summary>Apakah nomor HP memakai OTP?</summary><p class="description">Tidak. Nomor HP hanya dikumpulkan sebagai data profil; tidak ada verifikasi SMS pada alur ini.</p></details>
         <hr>
-        <details>
-          <summary>Apakah formulir kontak mengirim pesan ke admin?</summary>
-          <p class="description">Formulir kontak saat ini membantu menyiapkan pesan dan menyalinnya. Pengiriman dan penyimpanan pesan memerlukan alamat email atau backend yang dikonfigurasi.</p>
-        </details>
+        <details><summary>Bagaimana jika lupa kata sandi?</summary><p class="description">Gunakan menu “Lupa kata sandi” di halaman login. Supabase akan mengirim email jika pengaturan email dan redirect sudah benar.</p></details>
+        <hr>
+        <details><summary>Apakah formulir kontak mengirim pesan?</summary><p class="description">Belum. Formulir kontak pada versi ini hanya simulasi dan tidak mengirim atau menyimpan pesan.</p></details>
       </div>
     </section>
   </section>
 
-  <!-- KONTAK -->
   <section class="page" id="page-contact">
     <h1 class="page-title">Kontak</h1>
-    <p class="description">Siapkan pesan untuk dikirim melalui aplikasi pesan atau email milikmu. Formulir ini tidak berpura-pura telah mengirim pesan ke server.</p>
+    <p class="description">Formulir ini masih simulasi. Pesan tidak dikirim atau disimpan.</p>
     <section class="panel">
-      <div class="panel-title">Tulis Pesan</div>
+      <div class="panel-title">Formulir Kontak</div>
       <div class="panel-body form">
         <form id="contactForm">
-          <div class="field">
-            <label for="contactName">Nama</label>
-            <input id="contactName" name="name" maxlength="80" required placeholder="Nama kamu">
-          </div>
-          <div class="field">
-            <label for="contactEmail">Email</label>
-            <input id="contactEmail" name="email" type="email" maxlength="120" required placeholder="nama@example.com">
-          </div>
-          <div class="field">
-            <label for="contactText">Pesan</label>
-            <textarea id="contactText" name="message" maxlength="1500" required placeholder="Tulis pesan..."></textarea>
-          </div>
-          <div class="form-actions">
-            <button class="btn btn-gold" type="submit">SIAPKAN PESAN</button>
-            <button class="btn btn-dark" type="button" id="copyContact">SALIN PESAN</button>
-          </div>
+          <label>Nama<input type="text" name="name" maxlength="80" placeholder="Nama Anda" required></label>
+          <label>Email<input type="email" name="email" maxlength="120" placeholder="nama@example.com" required></label>
+          <label>Pesan<textarea name="message" maxlength="1000" placeholder="Tulis pesan..." required></textarea></label>
+          <button class="btn btn-gold" type="submit">JALANKAN SIMULASI</button>
         </form>
-        <div class="form-message" id="contactMessage" role="status"></div>
+        <div class="message" id="contactMessage" role="status"></div>
       </div>
     </section>
   </section>
 
-  <!-- AKUN -->
-  <section class="page" id="page-account">
-    <h1 class="page-title">Akun IOSORCA</h1>
-    <p class="description">Daftar akun baru, masuk, atau kelola sesi akunmu. Pastikan kamu menggunakan email yang benar.</p>
-
-    <section class="panel">
-      <div class="panel-title">Status Akun</div>
-      <div class="panel-body">
-        <div id="signedOutBox">
-          <div class="tabs">
-            <button class="tab active" data-auth-tab="login">Masuk</button>
-            <button class="tab" data-auth-tab="signup">Daftar</button>
-            <button class="tab" data-auth-tab="reset">Lupa kata sandi</button>
-          </div>
-
-          <form id="loginForm" class="form auth-form">
-            <div class="field">
-              <label for="loginIdentity">Email atau username</label>
-              <input id="loginIdentity" autocomplete="username" required placeholder="Email atau username">
-              <div class="field-note">Login email tersedia langsung. Login username memerlukan Edge Function Supabase yang telah dipasang.</div>
-            </div>
-            <div class="field">
-              <label for="loginPassword">Kata sandi</label>
-              <input id="loginPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="Kata sandi">
-            </div>
-            <button class="btn btn-gold" type="submit">MASUK</button>
-          </form>
-
-          <form id="signupForm" class="form auth-form hidden">
-            <div class="field">
-              <label for="signupUsername">Username</label>
-              <input id="signupUsername" autocomplete="username" minlength="3" maxlength="20" pattern="[a-zA-Z0-9_]{3,20}" required placeholder="contoh: iosorca_user">
-              <div class="field-note">3–20 karakter, gunakan huruf, angka, dan garis bawah.</div>
-            </div>
-            <div class="field">
-              <label for="signupEmail">Email</label>
-              <input id="signupEmail" type="email" autocomplete="email" maxlength="254" required placeholder="nama@example.com">
-            </div>
-            <div class="field">
-              <label for="signupPhone">Nomor HP internasional</label>
-              <input id="signupPhone" type="tel" autocomplete="tel" required pattern="\+[1-9][0-9]{7,14}" placeholder="+6281234567890">
-              <div class="field-note">Gunakan kode negara, misalnya +62. Nomor tidak diverifikasi melalui OTP pada formulir ini.</div>
-            </div>
-            <div class="field">
-              <label for="signupPassword">Kata sandi</label>
-              <input id="signupPassword" type="password" autocomplete="new-password" minlength="8" required placeholder="Minimal 8 karakter">
-            </div>
-            <div class="field">
-              <label for="signupPassword2">Ulangi kata sandi</label>
-              <input id="signupPassword2" type="password" autocomplete="new-password" minlength="8" required placeholder="Ulangi kata sandi">
-            </div>
-            <button class="btn btn-gold" type="submit">BUAT AKUN</button>
-          </form>
-
-          <form id="resetForm" class="form auth-form hidden">
-            <div class="field">
-              <label for="resetEmail">Email akun</label>
-              <input id="resetEmail" type="email" autocomplete="email" required placeholder="nama@example.com">
-            </div>
-            <button class="btn btn-gold" type="submit">KIRIM LINK PEMULIHAN</button>
-          </form>
-        </div>
-
-        <div id="signedInBox" class="hidden">
-          <div class="account-box">
-            <strong class="gold">Kamu sudah masuk</strong>
-            <p id="accountEmail">Email: —</p>
-            <p id="accountUsername">Username: belum dimuat</p>
-            <p id="accountPhone">Nomor HP: belum dimuat</p>
-            <p class="small muted">Status ini berasal dari sesi autentikasi Supabase.</p>
-          </div>
-
-          <form id="passwordForm" class="form">
-            <h3>Ganti kata sandi</h3>
-            <div class="field">
-              <label for="newPassword">Kata sandi baru</label>
-              <input id="newPassword" type="password" autocomplete="new-password" minlength="8" required placeholder="Minimal 8 karakter">
-            </div>
-            <button class="btn btn-dark" type="submit">UBAH KATA SANDI</button>
-          </form>
-          <div class="form-actions">
-            <button class="btn btn-danger" id="logoutButton" type="button">KELUAR</button>
-          </div>
-        </div>
-
-        <div class="form-message" id="authMessage" role="status"></div>
-      </div>
-    </section>
-
-    <div class="notice">
-      Keamanan: file HTML hanya berisi publishable key Supabase. Jangan pernah menaruh service_role key atau secret key server di sini.
-    </div>
-  </section>
-
-  <div class="form-message" id="globalMessage" role="status"></div>
+  <div class="message" id="globalMessage" role="status"></div>
 </main>
 
 <footer class="footer">
   <div class="container footer-grid">
-    <div>
-      <div class="logo">IOSOR<span>CA</span></div>
-      <p>Portal katalog dan akun pengguna.</p>
-      <p>Gunakan layanan dengan aman dan bertanggung jawab.</p>
-    </div>
-    <div>
-      <div class="footer-title">Navigasi</div>
-      <div class="footer-links">
-        <a href="#home" data-page="home">Beranda</a>
-        <a href="#games" data-page="games">Katalog</a>
-        <a href="#information" data-page="information">Informasi</a>
-      </div>
-    </div>
-    <div>
-      <div class="footer-title">Bantuan</div>
-      <div class="footer-links">
-        <a href="#help" data-page="help">Pusat bantuan</a>
-        <a href="#contact" data-page="contact">Kontak</a>
-        <a href="#account" data-page="account">Akun</a>
-      </div>
-    </div>
+    <div><div class="logo">IOSO<span>RCA</span></div><p>Katalog referensi game dan provider dengan antarmuka hitam dan emas.</p></div>
+    <div><div class="footer-title">Navigasi</div><ul class="info-list"><li><a href="#home" data-page="home">Beranda</a></li><li><a href="#games" data-page="games">Katalog</a></li><li><a href="#information" data-page="information">Informasi</a></li></ul></div>
+    <div><div class="footer-title">Bantuan</div><ul class="info-list"><li><a href="#help" data-page="help">Pusat bantuan</a></li><li><a href="#contact" data-page="contact">Kontak</a></li><li><button class="link-button" id="footerAccount">Akun / Login</button></li></ul></div>
   </div>
-  <div class="container" style="margin-top:20px">
-    © 2026 IOSORCA · Hak cipta dilindungi.
-  </div>
+  <div class="container" style="margin-top:20px">© <span id="yearNow"></span> IOSORCA · Katalog referensi, bukan layanan permainan atau transaksi.</div>
 </footer>
 
-<nav class="bottom-nav" aria-label="Navigasi seluler">
-  <button data-page="home">⌂<br>Beranda</button>
+<nav class="bottom-nav" aria-label="Navigasi bawah">
+  <button class="active" data-page="home">⌂<br>Beranda</button>
   <button data-page="games">▦<br>Katalog</button>
-  <button data-page="popular">★<br>Pilihan</button>
-  <button data-page="account">♙<br>Akun</button>
+  <button data-page="popular">★<br>Populer</button>
   <button data-page="help">?<br>Bantuan</button>
+  <button id="mobileAccount">👤<br>Akun</button>
 </nav>
 
-<!-- Supabase client -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<div class="modal-backdrop" id="accountModal" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="accountTitle">Akun IOSORCA</h2>
+      <button class="modal-close" id="closeAccount" aria-label="Tutup">×</button>
+    </div>
+    <div class="modal-body">
+      <div id="authPanel">
+        <div class="auth-tabs">
+          <button type="button" class="active" data-auth-tab="login">MASUK</button>
+          <button type="button" data-auth-tab="signup">DAFTAR</button>
+        </div>
 
+        <form class="auth-form active" id="loginForm">
+          <label>Username atau email<input name="identity" autocomplete="username" maxlength="254" placeholder="username atau email" required></label>
+          <label>Kata sandi<input name="password" type="password" autocomplete="current-password" minlength="6" placeholder="Kata sandi" required></label>
+          <button class="btn btn-gold" type="submit">MASUK KE AKUN</button>
+          <div class="auth-help">
+            <span>Belum punya akun?</span>
+            <button class="link-button" type="button" data-switch-auth="signup">Daftar sekarang</button>
+            <button class="link-button" type="button" id="forgotPassword">Lupa kata sandi?</button>
+          </div>
+        </form>
+
+        <form class="auth-form" id="signupForm">
+          <label>Username
+            <input name="username" autocomplete="username" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]{3,20}" placeholder="contoh: maulana_21" required>
+            <small style="color:var(--muted)">3–20 karakter; huruf, angka, dan garis bawah.</small>
+          </label>
+          <label>Email<input name="email" type="email" autocomplete="email" maxlength="254" placeholder="nama@example.com" required></label>
+          <label>Nomor HP
+            <input name="phone" type="tel" autocomplete="tel" maxlength="16" pattern="\+[1-9][0-9]{7,14}" placeholder="+6281234567890" required>
+            <small style="color:var(--muted)">Gunakan format internasional, contoh +6281234567890. Tidak ada OTP SMS.</small>
+          </label>
+          <label>Kata sandi<input name="password" type="password" autocomplete="new-password" minlength="8" placeholder="Minimal 8 karakter" required></label>
+          <button class="btn btn-gold" type="submit">BUAT AKUN</button>
+          <div class="auth-help"><span>Sudah punya akun?</span><button class="link-button" type="button" data-switch-auth="login">Masuk</button></div>
+        </form>
+      </div>
+
+      <div id="loggedPanel" hidden>
+        <div class="account-summary" id="accountSummary">Memuat informasi akun...</div>
+        <div class="account-actions">
+          <button class="btn btn-dark" id="changePassword">GANTI KATA SANDI</button>
+          <button class="btn btn-gold" id="logoutButton">KELUAR</button>
+        </div>
+        <form id="changePasswordForm" class="auth-form" style="margin-top:14px">
+          <label>Kata sandi baru<input type="password" name="newPassword" minlength="8" autocomplete="new-password" required></label>
+          <button class="btn btn-gold" type="submit">SIMPAN KATA SANDI</button>
+        </form>
+      </div>
+      <div class="message" id="authMessage" role="status"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 "use strict";
 
 /* KONFIGURASI SUPABASE IOSORCA */
 const SUPABASE_URL = "https://cxnxtpvgdedtvrrrvqgx.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_JECCFsiUyrYeQF0u2FXcFA_54I8FmaR";
+const USERNAME_LOGIN_FUNCTION = SUPABASE_URL + "/functions/v1/iosorca-username-login";
 
 let supabaseClient = null;
-let currentUser = null;
-let selectedCategory = "Semua";
-
-const items = [
-  {name:"Aurora Quest",category:"Strategi",icon:"✦",color:"#514080"},
-  {name:"Golden Puzzle",category:"Puzzle",icon:"◆",color:"#76541a"},
-  {name:"Neon Runner",category:"Arcade",icon:"⚡",color:"#155966"},
-  {name:"Royal Cards",category:"Kartu",icon:"♠",color:"#762e3b"},
-  {name:"Jungle Match",category:"Kasual",icon:"❋",color:"#286044"},
-  {name:"Star Tactics",category:"Strategi",icon:"✧",color:"#3b4c80"},
-  {name:"Crystal Grid",category:"Puzzle",icon:"◇",color:"#245b69"},
-  {name:"Pixel Dash",category:"Arcade",icon:"➤",color:"#784b25"},
-  {name:"Classic Deck",category:"Kartu",icon:"♣",color:"#4f3b30"},
-  {name:"Happy Garden",category:"Kasual",icon:"❀",color:"#32613c"},
-  {name:"Orbit Strategy",category:"Strategi",icon:"◎",color:"#51457b"},
-  {name:"Mystic Tiles",category:"Puzzle",icon:"▦",color:"#6a432c"},
-  {name:"Turbo Blocks",category:"Arcade",icon:"▣",color:"#2c5b76"},
-  {name:"Moon Cards",category:"Kartu",icon:"☾",color:"#4d426d"},
-  {name:"Tiny Village",category:"Kasual",icon:"⌂",color:"#675126"}
-];
+if (window.supabase && window.supabase.createClient) {
+  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+}
 
 const $ = id => document.getElementById(id);
 
-function showMessage(id, text, type = "") {
-  const element = $(id);
-  if (!element) return;
-  element.textContent = text;
-  element.className = "form-message" + (type ? " " + type : "");
-  element.style.display = "block";
+const games = [
+  {name:"Gates of Olympus",provider:"Pragmatic Play",category:"Slot",icon:"⚡",art:"#8b6827"},
+  {name:"Sweet Bonanza",provider:"Pragmatic Play",category:"Slot",icon:"🍬",art:"#9c477a"},
+  {name:"Mahjong Ways",provider:"PG Soft",category:"Slot",icon:"🀄",art:"#a34e28"},
+  {name:"Fortune Tiger",provider:"PG Soft",category:"Slot",icon:"🐯",art:"#b67b22"},
+  {name:"Wild West Gold",provider:"Pragmatic Play",category:"Slot",icon:"🤠",art:"#78532b"},
+  {name:"Starlight Princess",provider:"Pragmatic Play",category:"Slot",icon:"✨",art:"#694da0"},
+  {name:"Lucky Neko",provider:"PG Soft",category:"Slot",icon:"🐱",art:"#b05a40"},
+  {name:"Hot Hot Fruit",provider:"JILI",category:"Slot",icon:"🍒",art:"#9c3535"},
+  {name:"Aztec Gems",provider:"NetEnt",category:"Slot",icon:"💎",art:"#347c79"},
+  {name:"Egyptian Dreams",provider:"Habanero",category:"Slot",icon:"𓂀",art:"#886a36"},
+  {name:"Roulette Classic",provider:"Evolution",category:"Live Casino",icon:"🎡",art:"#8d3434"},
+  {name:"Live Blackjack",provider:"Evolution",category:"Live Casino",icon:"♠️",art:"#245b45"},
+  {name:"Baccarat Table",provider:"Evolution",category:"Live Casino",icon:"♦️",art:"#7c3333"},
+  {name:"European Roulette",provider:"Playtech",category:"Meja",icon:"🎯",art:"#306b4b"},
+  {name:"Blackjack 21",provider:"Playtech",category:"Meja",icon:"🃏",art:"#3c4e7b"},
+  {name:"Video Poker",provider:"Microgaming",category:"Kartu",icon:"♣️",art:"#34735b"},
+  {name:"Dragon Tiger",provider:"JILI",category:"Kartu",icon:"🐉",art:"#a14a2d"},
+  {name:"Gold Rush",provider:"Habanero",category:"Arcade",icon:"🪙",art:"#92702c"},
+  {name:"Neon Reels",provider:"CQ9",category:"Slot",icon:"🎰",art:"#6541a1"},
+  {name:"Royal Fishing",provider:"JILI",category:"Arcade",icon:"🎣",art:"#347b8a"}
+];
+
+let selectedCategory = "Semua";
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[char]);
 }
 
-function clearMessage(id) {
-  const element = $(id);
-  if (element) {
-    element.textContent = "";
-    element.style.display = "none";
-    element.className = "form-message";
-  }
+function showMessage(text, type = "", target = "authMessage") {
+  const box = $(target);
+  if (!box) return;
+  box.textContent = text;
+  box.className = "message" + (type ? " " + type : "");
+  box.style.display = "block";
 }
 
-function safeError(error) {
-  const message = error && error.message ? error.message : "Terjadi kesalahan. Coba lagi.";
-  return message.length > 260 ? message.slice(0, 260) : message;
+function hideMessage() {
+  ["authMessage", "globalMessage"].forEach(id => {
+    const box = $(id);
+    if (box) {
+      box.textContent = "";
+      box.style.display = "none";
+      box.className = "message";
+    }
+  });
 }
 
-/* NAVIGASI */
-const validPages = ["home","games","popular","information","help","contact","account"];
+function renderGrid(target, list) {
+  const grid = $(target);
+  if (!grid) return;
+  grid.innerHTML = list.map((game, index) => `
+    <article class="game-card">
+      <div class="game-art" style="--art:${escapeHTML(game.art)}">
+        <span class="game-badge">${escapeHTML(game.category)}</span>
+        <span aria-hidden="true">${escapeHTML(game.icon)}</span>
+      </div>
+      <div class="game-info">
+        <div class="game-name">${escapeHTML(game.name)}</div>
+        <div class="game-provider">Provider: ${escapeHTML(game.provider)}</div>
+        <div class="game-provider">Kategori: ${escapeHTML(game.category)}</div>
+        <button class="game-action" type="button" data-detail="${index}">LIHAT DETAIL</button>
+      </div>
+    </article>
+  `).join("");
+
+  grid.querySelectorAll("[data-detail]").forEach(button => {
+    button.addEventListener("click", () => {
+      const game = list[Number(button.dataset.detail)];
+      if (!game) return;
+      alert(
+        game.name + "\n" +
+        "Provider referensi: " + game.provider + "\n" +
+        "Kategori: " + game.category + "\n\n" +
+        "Kartu ini hanya informasi referensi. Permainan dan transaksi belum terintegrasi."
+      );
+    });
+  });
+}
+
+function updateCatalog() {
+  const query = ($("searchInput")?.value || "").trim().toLowerCase();
+  const sort = $("sortSelect")?.value || "default";
+  let filtered = games.filter(game => {
+    const categoryMatch = selectedCategory === "Semua" || game.category === selectedCategory;
+    const textMatch = (game.name + " " + game.provider + " " + game.category).toLowerCase().includes(query);
+    return categoryMatch && textMatch;
+  });
+
+  if (sort === "az") filtered.sort((a, b) => a.name.localeCompare(b.name));
+  if (sort === "za") filtered.sort((a, b) => b.name.localeCompare(a.name));
+
+  renderGrid("allGamesGrid", filtered);
+  $("emptyState").style.display = filtered.length ? "none" : "block";
+}
 
 function openPage(name) {
-  if (!validPages.includes(name)) name = "home";
+  const allowed = ["home", "games", "popular", "information", "help", "contact"];
+  if (!allowed.includes(name)) name = "home";
 
   document.querySelectorAll(".page").forEach(page => {
     page.classList.toggle("active", page.id === "page-" + name);
   });
 
-  document.querySelectorAll(".nav button[data-page]").forEach(button => {
+  document.querySelectorAll(".nav button, .bottom-nav button[data-page]").forEach(button => {
     button.classList.toggle("active", button.dataset.page === name);
   });
 
@@ -639,7 +737,6 @@ function openPage(name) {
   $("menuToggle").setAttribute("aria-expanded", "false");
 
   if (name === "games") updateCatalog();
-
   history.replaceState(null, "", "#" + name);
   window.scrollTo({top:0, behavior:"smooth"});
 }
@@ -655,78 +752,6 @@ document.querySelectorAll("[data-go]").forEach(button => {
   button.addEventListener("click", () => openPage(button.dataset.go));
 });
 
-$("menuToggle").addEventListener("click", () => {
-  const opened = $("navigation").classList.toggle("open");
-  $("menuToggle").setAttribute("aria-expanded", String(opened));
-});
-
-/* KATALOG */
-function createCard(item, index) {
-  const card = document.createElement("article");
-  card.className = "game-card";
-
-  const art = document.createElement("div");
-  art.className = "game-art";
-  art.style.setProperty("--art", item.color);
-  art.setAttribute("aria-hidden", "true");
-  art.textContent = item.icon;
-
-  if (index < 3) {
-    const badge = document.createElement("span");
-    badge.className = "game-badge";
-    badge.textContent = "PILIHAN";
-    art.appendChild(badge);
-  }
-
-  const info = document.createElement("div");
-  info.className = "game-info";
-
-  const name = document.createElement("div");
-  name.className = "game-name";
-  name.textContent = item.name;
-
-  const category = document.createElement("div");
-  category.className = "game-provider";
-  category.textContent = "Kategori: " + item.category;
-
-  const button = document.createElement("button");
-  button.className = "game-action";
-  button.type = "button";
-  button.textContent = "LIHAT DETAIL";
-  button.addEventListener("click", () => {
-    showMessage("globalMessage", item.name + " — kategori " + item.category + ". Tambahkan URL atau data resmi item ini untuk mengaktifkan tujuan detail.");
-    $("globalMessage").scrollIntoView({behavior:"smooth",block:"nearest"});
-  });
-
-  info.append(name, category, button);
-  card.append(art, info);
-  return card;
-}
-
-function renderGrid(target, list) {
-  target.replaceChildren(...list.map((item, index) => createCard(item, index)));
-}
-
-function updateCatalog() {
-  const query = $("searchInput").value.trim().toLowerCase();
-  const sort = $("sortSelect").value;
-
-  let filtered = items.filter(item => {
-    const categoryMatches = selectedCategory === "Semua" || item.category === selectedCategory;
-    const queryMatches = (item.name + " " + item.category).toLowerCase().includes(query);
-    return categoryMatches && queryMatches;
-  });
-
-  if (sort === "az") filtered.sort((a,b) => a.name.localeCompare(b.name));
-  if (sort === "za") filtered.sort((a,b) => b.name.localeCompare(a.name));
-
-  renderGrid($("allGamesGrid"), filtered);
-  $("emptyState").style.display = filtered.length ? "none" : "block";
-}
-
-$("searchInput").addEventListener("input", updateCatalog);
-$("sortSelect").addEventListener("change", updateCatalog);
-
 document.querySelectorAll("[data-category]").forEach(button => {
   button.addEventListener("click", () => {
     selectedCategory = button.dataset.category;
@@ -737,351 +762,349 @@ document.querySelectorAll("[data-category]").forEach(button => {
   });
 });
 
-renderGrid($("featuredGrid"), items.slice(0,5));
-renderGrid($("popularGrid"), [items[0],items[1],items[5],items[10],items[6],items[9]]);
-updateCatalog();
+$("searchInput").addEventListener("input", updateCatalog);
+$("sortSelect").addEventListener("change", updateCatalog);
 
-/* TAB AKUN */
-function selectAuthTab(tabName) {
+$("menuToggle").addEventListener("click", () => {
+  const isOpen = $("navigation").classList.toggle("open");
+  $("menuToggle").setAttribute("aria-expanded", String(isOpen));
+});
+
+$("contactForm").addEventListener("submit", event => {
+  event.preventDefault();
+  showMessage("Simulasi berhasil. Pesan tidak dikirim atau disimpan.", "success", "contactMessage");
+  event.currentTarget.reset();
+});
+
+$("yearNow").textContent = new Date().getFullYear();
+
+function showAccountModal() {
+  hideMessage();
+  $("accountModal").classList.add("open");
+  document.body.style.overflow = "hidden";
+  refreshAccount();
+}
+
+function closeAccountModal() {
+  $("accountModal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+$("accountButton").addEventListener("click", showAccountModal);
+$("footerAccount").addEventListener("click", showAccountModal);
+$("mobileAccount").addEventListener("click", showAccountModal);
+$("openAccountFromPromo").addEventListener("click", showAccountModal);
+$("closeAccount").addEventListener("click", closeAccountModal);
+
+$("accountModal").addEventListener("click", event => {
+  if (event.target === $("accountModal")) closeAccountModal();
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeAccountModal();
+});
+
+function switchAuthTab(name) {
   document.querySelectorAll("[data-auth-tab]").forEach(button => {
-    button.classList.toggle("active", button.dataset.authTab === tabName);
+    button.classList.toggle("active", button.dataset.authTab === name);
   });
 
-  document.querySelectorAll(".auth-form").forEach(form => form.classList.add("hidden"));
-  const target = {
-    login: $("loginForm"),
-    signup: $("signupForm"),
-    reset: $("resetForm")
-  }[tabName];
-
-  if (target) target.classList.remove("hidden");
-  clearMessage("authMessage");
+  $("loginForm").classList.toggle("active", name === "login");
+  $("signupForm").classList.toggle("active", name === "signup");
+  hideMessage();
 }
 
 document.querySelectorAll("[data-auth-tab]").forEach(button => {
-  button.addEventListener("click", () => selectAuthTab(button.dataset.authTab));
+  button.addEventListener("click", () => switchAuthTab(button.dataset.authTab));
 });
 
-/* SUPABASE */
-function initializeSupabase() {
-  if (!window.supabase || !window.supabase.createClient) {
-    showMessage("authMessage", "Pustaka Supabase gagal dimuat. Periksa koneksi internet lalu muat ulang halaman.", "error");
-    return false;
-  }
+document.querySelectorAll("[data-switch-auth]").forEach(button => {
+  button.addEventListener("click", () => switchAuthTab(button.dataset.switchAuth));
+});
 
-  supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY,
-    {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true
-      }
-    }
-  );
-
-  return true;
+function setAuthBusy(form, busy) {
+  const button = form.querySelector('button[type="submit"]');
+  if (!button) return;
+  if (!button.dataset.originalText) button.dataset.originalText = button.textContent;
+  button.disabled = busy;
+  button.textContent = busy ? "MEMPROSES..." : button.dataset.originalText;
 }
 
-function setAccountView(user) {
-  currentUser = user || null;
-  $("signedOutBox").classList.toggle("hidden", !!currentUser);
-  $("signedInBox").classList.toggle("hidden", !currentUser);
-
-  if (currentUser) {
-    $("accountEmail").textContent = "Email: " + (currentUser.email || "Tidak tersedia");
-    $("accountUsername").textContent = "Username: memuat...";
-    $("accountPhone").textContent = "Nomor HP: memuat...";
-    loadOwnProfile(currentUser);
-  }
+function normalizePhone(phone) {
+  return phone.trim().replace(/[\s()-]/g, "");
 }
 
-async function loadOwnProfile(user) {
-  if (!supabaseClient || !user) return;
+function safeAuthError(error) {
+  const message = String(error?.message || "").toLowerCase();
 
-  try {
-    const {data, error} = await supabaseClient
-      .from("profiles")
-      .select("username, phone")
-      .eq("id", user.id)
-      .maybeSingle();
-
-    if (error) throw error;
-
-    if (data) {
-      $("accountUsername").textContent = "Username: " + (data.username || "belum diatur");
-      $("accountPhone").textContent = "Nomor HP: " + (data.phone || "belum diatur");
-    } else {
-      $("accountUsername").textContent = "Username: profil belum ditemukan";
-      $("accountPhone").textContent = "Nomor HP: profil belum ditemukan";
-    }
-  } catch (error) {
-    $("accountUsername").textContent = "Username: belum dapat dimuat";
-    $("accountPhone").textContent = "Nomor HP: belum dapat dimuat";
-    console.error("Gagal memuat profil:", error);
+  if (message.includes("already registered") || message.includes("already exists") || message.includes("duplicate")) {
+    return "Email, username, atau nomor HP mungkin sudah digunakan. Periksa data atau gunakan data lain.";
   }
+  if (message.includes("password")) {
+    return "Kata sandi tidak memenuhi ketentuan Supabase.";
+  }
+  if (message.includes("fetch") || message.includes("network")) {
+    return "Tidak dapat terhubung ke Supabase. Periksa koneksi internet dan konfigurasi proyek.";
+  }
+  return "Permintaan gagal. Periksa data yang dimasukkan dan pengaturan Supabase, lalu coba lagi.";
 }
 
-/* PENDAFTARAN ASLI SUPABASE */
 $("signupForm").addEventListener("submit", async event => {
   event.preventDefault();
-  clearMessage("authMessage");
+  hideMessage();
 
   if (!supabaseClient) {
-    showMessage("authMessage", "Supabase belum tersambung. Muat ulang halaman dan coba lagi.", "error");
+    showMessage("Pustaka Supabase gagal dimuat. Periksa koneksi internet lalu muat ulang halaman.", "error");
     return;
   }
 
-  const username = $("signupUsername").value.trim().toLowerCase();
-  const email = $("signupEmail").value.trim();
-  const phone = $("signupPhone").value.trim();
-  const password = $("signupPassword").value;
-  const password2 = $("signupPassword2").value;
+  const form = event.currentTarget;
+  const data = new FormData(form);
+  const username = String(data.get("username")).trim().toLowerCase();
+  const email = String(data.get("email")).trim().toLowerCase();
+  const phone = normalizePhone(String(data.get("phone")));
+  const password = String(data.get("password"));
 
   if (!/^[a-z0-9_]{3,20}$/.test(username)) {
-    showMessage("authMessage", "Username harus 3–20 karakter, hanya huruf kecil, angka, atau garis bawah.", "error");
+    showMessage("Username harus 3–20 karakter dan hanya boleh berisi huruf kecil, angka, atau garis bawah.", "error");
     return;
   }
 
   if (!/^\+[1-9][0-9]{7,14}$/.test(phone)) {
-    showMessage("authMessage", "Format nomor HP tidak valid. Contoh: +6281234567890.", "error");
+    showMessage("Format nomor HP tidak valid. Gunakan format internasional, contoh +6281234567890.", "error");
     return;
   }
 
-  if (password.length < 8) {
-    showMessage("authMessage", "Kata sandi minimal 8 karakter.", "error");
-    return;
-  }
-
-  if (password !== password2) {
-    showMessage("authMessage", "Kedua kata sandi tidak sama.", "error");
-    return;
-  }
-
-  const submit = $("signupForm").querySelector('button[type="submit"]');
-  submit.disabled = true;
-  submit.textContent = "MEMBUAT AKUN...";
+  setAuthBusy(form, true);
 
   try {
-    const {data, error} = await supabaseClient.auth.signUp({
+    const {data: result, error} = await supabaseClient.auth.signUp({
       email,
       password,
-      options: {
-        data: {username, phone}
-      }
+      options: {data: {username, phone}}
     });
 
     if (error) throw error;
 
-    if (data.user && data.session) {
-      setAccountView(data.user);
-      showMessage("authMessage", "Pendaftaran berhasil dan sesi akun telah dibuat.", "success");
+    if (result.session) {
+      showMessage("Akun berhasil dibuat dan kamu sudah masuk.", "success");
+      form.reset();
+      await refreshAccount();
     } else {
-      showMessage("authMessage", "Permintaan pendaftaran diterima. Jika konfirmasi email diaktifkan pada Supabase, periksa kotak masuk email sebelum masuk.", "success");
-      selectAuthTab("login");
-      $("loginIdentity").value = email;
+      showMessage("Pendaftaran diterima, tetapi sesi belum aktif. Periksa pengaturan konfirmasi email Supabase.", "error");
     }
   } catch (error) {
-    showMessage("authMessage", safeError(error), "error");
+    showMessage(safeAuthError(error), "error");
   } finally {
-    submit.disabled = false;
-    submit.textContent = "BUAT AKUN";
+    setAuthBusy(form, false);
   }
 });
 
-/* LOGIN EMAIL ATAU USERNAME */
 $("loginForm").addEventListener("submit", async event => {
   event.preventDefault();
-  clearMessage("authMessage");
+  hideMessage();
 
   if (!supabaseClient) {
-    showMessage("authMessage", "Supabase belum tersambung. Muat ulang halaman dan coba lagi.", "error");
+    showMessage("Pustaka Supabase gagal dimuat. Periksa koneksi internet.", "error");
     return;
   }
 
-  const identity = $("loginIdentity").value.trim();
-  const password = $("loginPassword").value;
-  const submit = $("loginForm").querySelector('button[type="submit"]');
+  const form = event.currentTarget;
+  const data = new FormData(form);
+  const identity = String(data.get("identity")).trim();
+  const password = String(data.get("password"));
 
-  submit.disabled = true;
-  submit.textContent = "MEMERIKSA...";
+  setAuthBusy(form, true);
 
   try {
+    let result;
+
     if (identity.includes("@")) {
-      const {data, error} = await supabaseClient.auth.signInWithPassword({
-        email: identity,
+      result = await supabaseClient.auth.signInWithPassword({
+        email: identity.toLowerCase(),
         password
       });
-
-      if (error) throw error;
-      setAccountView(data.user);
-      showMessage("authMessage", "Login berhasil.", "success");
     } else {
-      /*
-       * Login username membutuhkan Edge Function terpasang di Supabase.
-       * Function harus memverifikasi username dan kata sandi secara aman.
-       */
-      const {data, error} = await supabaseClient.functions.invoke(
-        "iosorca-username-login",
-        {body: {username: identity.toLowerCase(), password}}
-      );
-
-      if (error) {
-        throw new Error("Login username belum tersedia atau layanan server bermasalah. Pastikan Edge Function iosorca-username-login sudah di-deploy.");
-      }
-
-      if (!data || !data.access_token || !data.refresh_token) {
-        throw new Error("Server tidak mengembalikan sesi login yang valid.");
-      }
-
-      const {data: sessionData, error: sessionError} = await supabaseClient.auth.setSession({
-        access_token: data.access_token,
-        refresh_token: data.refresh_token
+      const response = await fetch(USERNAME_LOGIN_FUNCTION, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_PUBLISHABLE_KEY,
+          "Authorization": "Bearer " + SUPABASE_PUBLISHABLE_KEY
+        },
+        body: JSON.stringify({username: identity.toLowerCase(), password})
       });
 
-      if (sessionError) throw sessionError;
-      setAccountView(sessionData.user);
-      showMessage("authMessage", "Login berhasil.", "success");
+      let body = {};
+      try { body = await response.json(); } catch {}
+
+      if (!response.ok || !body.access_token || !body.refresh_token) {
+        throw new Error("USERNAME_LOGIN_FAILED");
+      }
+
+      result = await supabaseClient.auth.setSession({
+        access_token: body.access_token,
+        refresh_token: body.refresh_token
+      });
     }
+
+    if (result.error) throw result.error;
+
+    showMessage("Login berhasil. Selamat datang kembali!", "success");
+    form.reset();
+    await refreshAccount();
   } catch (error) {
-    showMessage("authMessage", safeError(error), "error");
+    showMessage("Login gagal. Periksa username/email dan kata sandi. Login username memerlukan Edge Function IOSORCA yang sudah dipasang.", "error");
   } finally {
-    submit.disabled = false;
-    submit.textContent = "MASUK";
+    setAuthBusy(form, false);
   }
 });
 
-/* PEMULIHAN KATA SANDI */
-$("resetForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  clearMessage("authMessage");
-
+async function refreshAccount() {
   if (!supabaseClient) {
-    showMessage("authMessage", "Supabase belum tersambung.", "error");
+    $("authPanel").hidden = false;
+    $("loggedPanel").hidden = true;
     return;
   }
 
-  const email = $("resetEmail").value.trim();
-  const submit = $("resetForm").querySelector('button[type="submit"]');
-  submit.disabled = true;
-  submit.textContent = "MENGIRIM...";
+  try {
+    const {data: {session}} = await supabaseClient.auth.getSession();
+    const logged = !!session;
+
+    $("authPanel").hidden = logged;
+    $("loggedPanel").hidden = !logged;
+
+    if (logged) {
+      const user = session.user;
+      let username = user.user_metadata?.username || "—";
+      let phone = user.user_metadata?.phone || "—";
+
+      try {
+        const {data: profile} = await supabaseClient
+          .from("profiles")
+          .select("username,phone")
+          .eq("id", user.id)
+          .maybeSingle();
+
+        if (profile) {
+          username = profile.username || username;
+          phone = profile.phone || phone;
+        }
+      } catch {}
+
+      $("accountSummary").replaceChildren();
+
+      const lines = [
+        ["Status", "Sudah masuk"],
+        ["Username", username],
+        ["Email", user.email || "—"],
+        ["Nomor HP", phone]
+      ];
+
+      for (const [label, value] of lines) {
+        const row = document.createElement("div");
+        const strong = document.createElement("strong");
+        strong.textContent = label + ": ";
+        row.append(strong, document.createTextNode(value));
+        $("accountSummary").append(row);
+      }
+    }
+  } catch {
+    $("authPanel").hidden = false;
+    $("loggedPanel").hidden = true;
+  }
+}
+
+if (supabaseClient) {
+  supabaseClient.auth.onAuthStateChange(() => {
+    setTimeout(refreshAccount, 0);
+  });
+}
+
+$("forgotPassword").addEventListener("click", async () => {
+  hideMessage();
+
+  if (!supabaseClient) {
+    showMessage("Supabase belum siap.", "error");
+    return;
+  }
+
+  const identity = String(new FormData($("loginForm")).get("identity") || "").trim();
+
+  if (!identity || !identity.includes("@")) {
+    showMessage("Masukkan alamat email di kolom username/email terlebih dahulu. Pemulihan kata sandi menggunakan email.", "error");
+    return;
+  }
 
   try {
-    const redirectTo = window.location.origin + window.location.pathname + "#account";
-    const {error} = await supabaseClient.auth.resetPasswordForEmail(email, {redirectTo});
+    const redirectTo = location.origin + location.pathname + "#home";
+    const {error} = await supabaseClient.auth.resetPasswordForEmail(identity, {redirectTo});
     if (error) throw error;
 
-    showMessage("authMessage", "Jika alamat email terdaftar, instruksi pemulihan akan dikirim. Periksa kotak masuk dan folder spam.", "success");
-  } catch (error) {
-    showMessage("authMessage", safeError(error), "error");
-  } finally {
-    submit.disabled = false;
-    submit.textContent = "KIRIM LINK PEMULIHAN";
+    showMessage("Jika email tersebut terdaftar, tautan pemulihan akan dikirim. Periksa kotak masuk dan folder spam.", "success");
+  } catch {
+    showMessage("Permintaan pemulihan gagal. Periksa pengaturan email dan URL redirect Supabase.", "error");
   }
 });
 
-/* GANTI KATA SANDI — membutuhkan sesi login atau sesi pemulihan */
-$("passwordForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  clearMessage("authMessage");
+$("changePassword").addEventListener("click", () => {
+  $("changePasswordForm").classList.toggle("active");
+});
 
-  const password = $("newPassword").value;
+$("changePasswordForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  hideMessage();
+
+  if (!supabaseClient) {
+    showMessage("Supabase belum siap.", "error");
+    return;
+  }
+
+  const form = event.currentTarget;
+  const password = String(new FormData(form).get("newPassword"));
+
   if (password.length < 8) {
-    showMessage("authMessage", "Kata sandi minimal 8 karakter.", "error");
+    showMessage("Kata sandi minimal 8 karakter.", "error");
     return;
   }
 
   try {
     const {error} = await supabaseClient.auth.updateUser({password});
     if (error) throw error;
-    $("passwordForm").reset();
-    showMessage("authMessage", "Kata sandi berhasil diperbarui.", "success");
-  } catch (error) {
-    showMessage("authMessage", safeError(error), "error");
+
+    form.reset();
+    form.classList.remove("active");
+    showMessage("Kata sandi berhasil diperbarui.", "success");
+  } catch {
+    showMessage("Kata sandi gagal diperbarui. Login ulang bila sesi sudah kedaluwarsa.", "error");
   }
 });
 
-/* LOGOUT */
 $("logoutButton").addEventListener("click", async () => {
-  if (!supabaseClient) return;
+  hideMessage();
 
-  $("logoutButton").disabled = true;
+  if (!supabaseClient) {
+    showMessage("Supabase belum siap.", "error");
+    return;
+  }
+
   try {
     const {error} = await supabaseClient.auth.signOut();
     if (error) throw error;
 
-    setAccountView(null);
-    showMessage("authMessage", "Kamu sudah keluar dari akun.", "success");
-    selectAuthTab("login");
-  } catch (error) {
-    showMessage("authMessage", safeError(error), "error");
-  } finally {
-    $("logoutButton").disabled = false;
-  }
-});
-
-/* KONTAK: MENYIAPKAN DAN MENYALIN PESAN, TIDAK MENGAKU MENGIRIM */
-function makeContactMessage() {
-  return [
-    "Pesan untuk IOSORCA",
-    "Nama: " + $("contactName").value.trim(),
-    "Email: " + $("contactEmail").value.trim(),
-    "",
-    $("contactText").value.trim()
-  ].join("\n");
-}
-
-$("contactForm").addEventListener("submit", async event => {
-  event.preventDefault();
-
-  const message = makeContactMessage();
-  try {
-    await navigator.clipboard.writeText(message);
-    showMessage("contactMessage", "Pesan berhasil disalin. Kamu bisa menempelkannya ke aplikasi email atau pesan untuk mengirimkannya.", "success");
+    showMessage("Kamu sudah keluar dari akun.", "success");
+    switchAuthTab("login");
   } catch {
-    showMessage("contactMessage", "Pesan sudah disiapkan. Tekan tombol SALIN PESAN jika browser mengizinkan akses clipboard.", "");
+    showMessage("Logout gagal. Coba muat ulang halaman.", "error");
   }
 });
 
-$("copyContact").addEventListener("click", async () => {
-  if (!$("contactForm").reportValidity()) return;
+renderGrid("featuredGrid", games.slice(0, 5));
+renderGrid("popularGrid", games.slice(0, 10));
+updateCatalog();
 
-  try {
-    await navigator.clipboard.writeText(makeContactMessage());
-    showMessage("contactMessage", "Pesan berhasil disalin.", "success");
-  } catch {
-    showMessage("contactMessage", "Browser tidak mengizinkan penyalinan otomatis. Coba buka website melalui HTTPS.", "error");
-  }
-});
-
-/* PEMULIHAN SANDI: jika datang dari link email dengan token URL,
-   Supabase menangani sesi melalui detectSessionInUrl. */
-async function startApp() {
-  if (!initializeSupabase()) return;
-
-  const {data, error} = await supabaseClient.auth.getSession();
-
-  if (error) {
-    console.error("Gagal memeriksa sesi:", error);
-  }
-
-  setAccountView(data && data.session ? data.session.user : null);
-
-  supabaseClient.auth.onAuthStateChange((event, session) => {
-    setAccountView(session ? session.user : null);
-
-    if (event === "PASSWORD_RECOVERY") {
-      openPage("account");
-      showMessage("authMessage", "Sesi pemulihan aktif. Masukkan kata sandi baru di bagian Ganti kata sandi.", "success");
-    }
-  });
-}
-
-const initialPage = location.hash.replace("#", "");
-openPage(validPages.includes(initialPage) ? initialPage : "home");
-startApp();
+const initialPage = location.hash.slice(1);
+openPage(initialPage || "home");
 </script>
-
 </body>
 </html>
