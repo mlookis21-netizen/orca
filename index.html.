@@ -1,0 +1,1413 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111216">
+<title>Portal Demo</title>
+
+<style>
+:root {
+  --bg: #111216;
+  --card: #1b1d23;
+  --card2: #252831;
+  --border: #373a44;
+  --gold: #f2c64b;
+  --gold2: #dba52d;
+  --text: #f5f5f5;
+  --muted: #aeb3bf;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.demo-notice {
+  padding: 9px;
+  text-align: center;
+  background: var(--gold);
+  color: #161616;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.container {
+  max-width: 1150px;
+  margin: auto;
+  padding: 0 16px;
+}
+
+/* HEADER */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #15161bee;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  max-width: 1150px;
+  margin: auto;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.logo span {
+  color: var(--gold);
+}
+
+.logo small {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+.nav {
+  display: flex;
+  gap: 5px;
+  flex: 1;
+}
+
+.nav button {
+  border: 0;
+  background: transparent;
+  color: #ddd;
+  padding: 11px 12px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.nav button:hover,
+.nav button.active {
+  background: #352c18;
+  color: var(--gold);
+}
+
+.menu-toggle {
+  display: none;
+  background: var(--card2);
+  color: white;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 10px 12px;
+}
+
+/* BUTTONS */
+
+.btn {
+  padding: 11px 15px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  font-weight: 800;
+  font-size: 12px;
+  transition: .2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-gold {
+  background: linear-gradient(
+    180deg,
+    #ffe486,
+    var(--gold2)
+  );
+  color: #18140a;
+}
+
+.btn-dark {
+  background: var(--card2);
+  color: white;
+  border-color: var(--border);
+}
+
+/* HERO */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.4fr .8fr;
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.hero-main {
+  min-height: 255px;
+  padding: 30px;
+  border: 1px solid #6b5520;
+  border-radius: 12px;
+  background:
+    radial-gradient(
+      circle at 85% 45%,
+      #72551c,
+      transparent 42%
+    ),
+    linear-gradient(
+      120deg,
+      #2b220f,
+      #171717
+    );
+  position: relative;
+  overflow: hidden;
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.hero h1 {
+  font-size: clamp(28px, 4vw, 43px);
+  line-height: 1.1;
+  margin: 15px 0;
+}
+
+.hero p {
+  max-width: 520px;
+  color: #d0c9b8;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.hero-symbol {
+  position: absolute;
+  right: 25px;
+  bottom: -20px;
+  color: #f2c64b22;
+  font-size: 170px;
+  pointer-events: none;
+}
+
+.hero-side {
+  display: grid;
+  gap: 12px;
+}
+
+.promo {
+  background: linear-gradient(
+    135deg,
+    #292b31,
+    #191a1e
+  );
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.promo-icon {
+  font-size: 25px;
+  color: var(--gold);
+}
+
+.promo strong {
+  display: block;
+  margin: 9px 0;
+}
+
+.promo p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* STATISTICS */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.stat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.stat strong {
+  display: block;
+  font-size: 13px;
+}
+
+.stat small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 6px;
+}
+
+/* SECTIONS */
+
+.section {
+  margin: 25px 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.section-header h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.section-header p {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.text-link {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* CATEGORY */
+
+.categories {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.category {
+  flex-shrink: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: white;
+  border-radius: 8px;
+  padding: 11px 15px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.category.active,
+.category:hover {
+  color: var(--gold);
+  border-color: var(--gold2);
+  background: #342b17;
+}
+
+/* SEARCH */
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.search {
+  flex: 1;
+}
+
+.search input,
+.sort {
+  width: 100%;
+  background: var(--card);
+  color: white;
+  border: 1px solid var(--border);
+  padding: 13px;
+  border-radius: 8px;
+  outline: none;
+}
+
+.search input:focus {
+  border-color: var(--gold);
+}
+
+.sort {
+  max-width: 180px;
+}
+
+/* GAME CARDS */
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.game-card {
+  min-width: 0;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: .2s;
+}
+
+.game-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold2);
+}
+
+.game-art {
+  height: 125px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background:
+    radial-gradient(
+      circle,
+      var(--art),
+      #17181d 75%
+    );
+  font-size: 43px;
+}
+
+.game-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: var(--gold);
+  color: #17130a;
+  padding: 5px 7px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.game-info {
+  padding: 11px;
+}
+
+.game-name {
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.game-provider {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.game-action {
+  margin-top: 12px;
+  width: 100%;
+  padding: 9px;
+  background: #302817;
+  color: var(--gold);
+  border: 1px solid #65501f;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.empty {
+  display: none;
+  padding: 30px;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+}
+
+/* INTERNAL PAGES */
+
+.page {
+  display: none;
+  min-height: 350px;
+}
+
+.page.active {
+  display: block;
+}
+
+.page-title {
+  font-size: 28px;
+  margin: 25px 0 10px;
+}
+
+.description {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 800px;
+}
+
+.panel {
+  margin: 18px 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.panel-title {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 900;
+}
+
+.panel-body {
+  padding: 17px;
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.info-list li:last-child {
+  border-bottom: 0;
+}
+
+.info-list a:hover {
+  color: var(--gold);
+}
+
+.notice {
+  padding: 14px;
+  background: #302817;
+  border: 1px solid #6b5520;
+  color: #e7d7a4;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* CONTACT FORM */
+
+.form {
+  max-width: 500px;
+}
+
+.form label {
+  display: block;
+  font-size: 12px;
+  margin: 15px 0;
+}
+
+.form input,
+.form textarea {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  color: white;
+  background: #111216;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+}
+
+.form textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.message {
+  display: none;
+  margin-top: 12px;
+  padding: 12px;
+  background: #302817;
+  border: 1px solid #6b5520;
+  border-radius: 7px;
+  color: var(--gold);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* FOOTER */
+
+.footer {
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+  padding: 25px 0 35px;
+  color: #9296a0;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 20px;
+}
+
+.footer-title {
+  font-weight: 900;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.footer-links {
+  display: grid;
+  gap: 7px;
+}
+
+.footer-links a:hover {
+  color: var(--gold);
+}
+
+/* MOBILE */
+
+.bottom-nav {
+  display: none;
+}
+
+@media(max-width: 950px) {
+  .game-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .nav button {
+    padding: 10px 8px;
+  }
+}
+
+@media(max-width: 720px) {
+  .header-inner {
+    gap: 10px;
+  }
+
+  .menu-toggle {
+    display: block;
+    margin-left: auto;
+  }
+
+  .nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 12px;
+    background: #17181c;
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+  }
+
+  .nav.open {
+    display: flex;
+  }
+
+  .nav button {
+    text-align: left;
+    padding: 13px;
+  }
+
+  .header-actions {
+    display: none;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-main {
+    padding: 23px;
+  }
+
+  .hero-side {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .game-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .game-art {
+    height: 100px;
+  }
+
+  .two-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .bottom-nav {
+    position: fixed;
+    display: flex;
+    z-index: 90;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    justify-content: space-around;
+    padding: 8px 3px;
+    background: #17181cee;
+    border-top: 1px solid var(--border);
+  }
+
+  .bottom-nav button {
+    background: transparent;
+    color: var(--muted);
+    border: 0;
+    font-size: 10px;
+    padding: 5px;
+  }
+
+  body {
+    padding-bottom: 65px;
+  }
+}
+
+@media(max-width: 430px) {
+  .container {
+    padding: 0 11px;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+
+  .game-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .game-art {
+    height: 120px;
+  }
+
+  .toolbar {
+    flex-direction: column;
+  }
+
+  .sort {
+    max-width: none;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="demo-notice">
+  TEMPLATE DEMO · BUKAN SITUS RESMI · TANPA TARUHAN ATAU TRANSAKSI
+</div>
+
+<header class="header">
+  <div class="header-inner">
+
+    <a href="#home" class="logo" data-page="home">
+      PORTAL<span>DEMO</span>
+      <small>FRONTEND TEMPLATE</small>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle">
+      ☰ MENU
+    </button>
+
+    <nav class="nav" id="navigation">
+      <button class="active" data-page="home">⌂ Beranda</button>
+      <button data-page="games">▦ Katalog</button>
+      <button data-page="popular">★ Populer</button>
+      <button data-page="information">▤ Informasi</button>
+      <button data-page="help">? Bantuan</button>
+      <button data-page="contact">✉ Kontak</button>
+    </nav>
+
+    <div class="header-actions">
+      <button class="btn btn-dark" data-demo="Ini adalah tombol akun demo.">
+        AKUN DEMO
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- BERANDA -->
+
+  <section class="page active" id="page-home">
+
+    <div class="hero">
+
+      <div class="hero-main">
+        <div class="eyebrow">PORTAL FRONTEND</div>
+
+        <h1>Jelajahi Katalog<br>Dalam Satu Tampilan</h1>
+
+        <p>
+          Template antarmuka modern dengan navigasi,
+          kategori, kartu katalog, dan halaman internal.
+        </p>
+
+        <button class="btn btn-gold" data-go="games">
+          JELAJAHI KATALOG →
+        </button>
+
+        <div class="hero-symbol">✦</div>
+      </div>
+
+      <div class="hero-side">
+
+        <div class="promo">
+          <div class="promo-icon">▣</div>
+          <strong>Desain Responsif</strong>
+          <p>Menyesuaikan layar HP dan laptop.</p>
+        </div>
+
+        <div class="promo">
+          <div class="promo-icon">⚙</div>
+          <strong>Interaksi Frontend</strong>
+          <p>Pencarian dan navigasi lokal.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <strong>▦ Katalog</strong>
+        <small>Kartu contoh</small>
+      </div>
+
+      <div class="stat">
+        <strong>⌕ Pencarian</strong>
+        <small>Filter nama</small>
+      </div>
+
+      <div class="stat">
+        <strong>↔ Navigasi</strong>
+        <small>Halaman internal</small>
+      </div>
+
+      <div class="stat">
+        <strong>▤ Informasi</strong>
+        <small>Konten demo</small>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>Katalog Pilihan</h2>
+          <p>Contoh kartu untuk demonstrasi desain.</p>
+        </div>
+
+        <button class="text-link" data-go="games">
+          LIHAT SEMUA →
+        </button>
+      </div>
+
+      <div class="game-grid" id="featuredGrid"></div>
+    </section>
+
+    <div class="two-columns">
+
+      <section class="panel">
+        <div class="panel-title">Tentang Template</div>
+
+        <div class="panel-body">
+          <p class="description">
+            Template ini merupakan contoh frontend.
+            Nama katalog, gambar, dan kategori adalah konten demo,
+            bukan daftar asli dari website lain.
+          </p>
+
+          <div class="notice">
+            Tidak ada akun asli, taruhan, pembayaran,
+            atau transaksi yang diproses.
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">Navigasi Cepat</div>
+
+        <div class="panel-body">
+          <ul class="info-list">
+            <li><a href="#games" data-page="games">Buka katalog</a></li>
+            <li><a href="#popular" data-page="popular">Pilihan populer</a></li>
+            <li><a href="#information" data-page="information">Informasi</a></li>
+            <li><a href="#help" data-page="help">Pusat bantuan</a></li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+  <!-- KATALOG -->
+
+  <section class="page" id="page-games">
+
+    <h1 class="page-title">Katalog Demo</h1>
+
+    <p class="description">
+      Cari dan filter kartu contoh berdasarkan kategori.
+      Kartu ini tidak menjalankan permainan.
+    </p>
+
+    <div class="categories">
+      <button class="category active" data-category="Semua">
+        Semua
+      </button>
+
+      <button class="category" data-category="Strategi">
+        Strategi
+      </button>
+
+      <button class="category" data-category="Puzzle">
+        Puzzle
+      </button>
+
+      <button class="category" data-category="Arcade">
+        Arcade
+      </button>
+
+      <button class="category" data-category="Kartu">
+        Kartu
+      </button>
+
+      <button class="category" data-category="Kasual">
+        Kasual
+      </button>
+    </div>
+
+    <div class="toolbar">
+
+      <div class="search">
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="Cari katalog demo..."
+          aria-label="Cari katalog"
+        >
+      </div>
+
+      <select class="sort" id="sortSelect" aria-label="Urutkan">
+        <option value="default">Urutan awal</option>
+        <option value="az">Nama A–Z</option>
+        <option value="za">Nama Z–A</option>
+      </select>
+
+    </div>
+
+    <div class="game-grid" id="allGamesGrid"></div>
+
+    <div class="empty" id="emptyState">
+      Tidak ada kartu yang cocok.
+    </div>
+
+  </section>
+
+  <!-- POPULER -->
+
+  <section class="page" id="page-popular">
+
+    <h1 class="page-title">Pilihan Populer Demo</h1>
+
+    <p class="description">
+      Contoh tampilan daftar pilihan. Label populer hanya
+      untuk demonstrasi desain.
+    </p>
+
+    <div class="game-grid" id="popularGrid"></div>
+
+  </section>
+
+  <!-- INFORMASI -->
+
+  <section class="page" id="page-information">
+
+    <h1 class="page-title">Informasi</h1>
+
+    <div class="two-columns">
+
+      <section class="panel">
+        <div class="panel-title">Tentang Website Demo</div>
+
+        <div class="panel-body">
+          <p class="description">
+            Halaman ini dapat digunakan sebagai tempat informasi,
+            pengumuman, deskripsi produk, atau dokumentasi proyek.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">Fitur Template</div>
+
+        <div class="panel-body">
+          <ul class="info-list">
+            <li>✓ Desain responsif</li>
+            <li>✓ Navigasi halaman internal</li>
+            <li>✓ Pencarian katalog</li>
+            <li>✓ Filter kategori</li>
+            <li>✓ Formulir demo</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+  <!-- BANTUAN -->
+
+  <section class="page" id="page-help">
+
+    <h1 class="page-title">Pusat Bantuan</h1>
+
+    <section class="panel">
+      <div class="panel-title">Pertanyaan Umum</div>
+
+      <div class="panel-body">
+
+        <details open>
+          <summary>Apakah website terhubung ke server?</summary>
+          <p class="description">
+            Tidak. Template ini bekerja secara lokal di browser.
+          </p>
+        </details>
+
+        <hr>
+
+        <details>
+          <summary>Apakah katalog ini asli?</summary>
+          <p class="description">
+            Tidak. Semua nama dan ilustrasi adalah konten contoh.
+          </p>
+        </details>
+
+        <hr>
+
+        <details>
+          <summary>Bisakah tampilannya diubah?</summary>
+          <p class="description">
+            Ya. Warna, ukuran, tata letak, dan konten dapat disesuaikan.
+          </p>
+        </details>
+
+        <hr>
+
+        <details>
+          <summary>Apakah data dikirim ke server?</summary>
+          <p class="description">
+            Tidak ada data yang dikirim oleh fitur demo ini.
+          </p>
+        </details>
+
+      </div>
+    </section>
+
+  </section>
+
+  <!-- KONTAK -->
+
+  <section class="page" id="page-contact">
+
+    <h1 class="page-title">Kontak Demo</h1>
+
+    <p class="description">
+      Formulir ini hanya untuk menguji tampilan antarmuka.
+      Pesan tidak dikirim atau disimpan.
+    </p>
+
+    <section class="panel">
+      <div class="panel-title">Formulir Contoh</div>
+
+      <div class="panel-body form">
+
+        <form id="contactForm">
+
+          <label>
+            Nama contoh
+            <input
+              type="text"
+              name="name"
+              maxlength="80"
+              placeholder="Nama Anda"
+              required
+            >
+          </label>
+
+          <label>
+            Email contoh
+            <input
+              type="email"
+              name="email"
+              maxlength="120"
+              placeholder="nama@example.com"
+              required
+            >
+          </label>
+
+          <label>
+            Pesan
+            <textarea
+              name="message"
+              maxlength="1000"
+              placeholder="Tulis pesan demo..."
+              required
+            ></textarea>
+          </label>
+
+          <button class="btn btn-gold" type="submit">
+            JALANKAN SIMULASI
+          </button>
+
+        </form>
+
+        <div class="message" id="contactMessage"></div>
+
+      </div>
+    </section>
+
+  </section>
+
+  <div class="message" id="globalMessage" role="status"></div>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+
+    <div>
+      <div class="logo">PORTAL<span>DEMO</span></div>
+
+      <p>
+        Template frontend untuk pembelajaran dan demonstrasi.
+      </p>
+    </div>
+
+    <div>
+      <div class="footer-title">Navigasi</div>
+
+      <ul class="info-list">
+        <li><a href="#home" data-page="home">Beranda</a></li>
+        <li><a href="#games" data-page="games">Katalog</a></li>
+        <li><a href="#information" data-page="information">Informasi</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-title">Bantuan</div>
+
+      <ul class="info-list">
+        <li><a href="#help" data-page="help">Pusat bantuan</a></li>
+        <li><a href="#contact" data-page="contact">Kontak demo</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="container" style="margin-top:20px">
+    Template demo · Tidak terhubung dengan layanan pihak ketiga.
+  </div>
+</footer>
+
+<nav class="bottom-nav">
+  <button data-page="home">⌂<br>Beranda</button>
+  <button data-page="games">▦<br>Katalog</button>
+  <button data-page="popular">★<br>Populer</button>
+  <button data-page="help">?<br>Bantuan</button>
+</nav>
+
+<script>
+const items = [
+  {name:"Aurora Quest",category:"Strategi",icon:"✦",color:"#514080"},
+  {name:"Golden Puzzle",category:"Puzzle",icon:"◆",color:"#76541a"},
+  {name:"Neon Runner",category:"Arcade",icon:"⚡",color:"#155966"},
+  {name:"Royal Cards",category:"Kartu",icon:"♠",color:"#762e3b"},
+  {name:"Jungle Match",category:"Kasual",icon:"❋",color:"#286044"},
+  {name:"Star Tactics",category:"Strategi",icon:"✧",color:"#3b4c80"},
+  {name:"Crystal Grid",category:"Puzzle",icon:"◇",color:"#245b69"},
+  {name:"Pixel Dash",category:"Arcade",icon:"➤",color:"#784b25"},
+  {name:"Classic Deck",category:"Kartu",icon:"♣",color:"#4f3b30"},
+  {name:"Happy Garden",category:"Kasual",icon:"❀",color:"#32613c"},
+  {name:"Orbit Strategy",category:"Strategi",icon:"◎",color:"#51457b"},
+  {name:"Mystic Tiles",category:"Puzzle",icon:"▦",color:"#6a432c"},
+  {name:"Turbo Blocks",category:"Arcade",icon:"▣",color:"#2c5b76"},
+  {name:"Moon Cards",category:"Kartu",icon:"☾",color:"#4d426d"},
+  {name:"Tiny Village",category:"Kasual",icon:"⌂",color:"#675126"}
+];
+
+let selectedCategory = "Semua";
+
+const featuredGrid = document.getElementById("featuredGrid");
+const allGamesGrid = document.getElementById("allGamesGrid");
+const popularGrid = document.getElementById("popularGrid");
+
+function createCard(item, index) {
+  const card = document.createElement("article");
+  card.className = "game-card";
+
+  const art = document.createElement("div");
+  art.className = "game-art";
+  art.style.setProperty("--art", item.color);
+  art.textContent = item.icon;
+
+  if (index < 3) {
+    const badge = document.createElement("span");
+    badge.className = "game-badge";
+    badge.textContent = "DEMO";
+    art.appendChild(badge);
+  }
+
+  const info = document.createElement("div");
+  info.className = "game-info";
+
+  const name = document.createElement("div");
+  name.className = "game-name";
+  name.textContent = item.name;
+
+  const provider = document.createElement("div");
+  provider.className = "game-provider";
+  provider.textContent = "Kategori: " + item.category;
+
+  const button = document.createElement("button");
+  button.className = "game-action";
+  button.type = "button";
+  button.textContent = "LIHAT DETAIL";
+
+  button.addEventListener("click", () => {
+    showMessage(
+      item.name +
+      " adalah kartu katalog demo. Tidak ada permainan yang dijalankan."
+    );
+  });
+
+  info.append(name, provider, button);
+  card.append(art, info);
+
+  return card;
+}
+
+function renderGrid(target, list) {
+  target.replaceChildren(
+    ...list.map((item, index) => createCard(item, index))
+  );
+}
+
+renderGrid(featuredGrid, items.slice(0, 5));
+renderGrid(popularGrid, [
+  items[0], items[1], items[5],
+  items[10], items[6], items[9]
+]);
+
+function updateCatalog() {
+  const query = document
+    .getElementById("searchInput")
+    .value.trim().toLowerCase();
+
+  const sort = document.getElementById("sortSelect").value;
+
+  let filtered = items.filter(item => {
+    const categoryMatches =
+      selectedCategory === "Semua" ||
+      item.category === selectedCategory;
+
+    const queryMatches =
+      (item.name + " " + item.category)
+        .toLowerCase()
+        .includes(query);
+
+    return categoryMatches && queryMatches;
+  });
+
+  if (sort === "az") {
+    filtered.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  if (sort === "za") {
+    filtered.sort((a, b) => b.name.localeCompare(a.name));
+  }
+
+  renderGrid(allGamesGrid, filtered);
+
+  document.getElementById("emptyState").style.display =
+    filtered.length ? "none" : "block";
+}
+
+document.getElementById("searchInput")
+  .addEventListener("input", updateCatalog);
+
+document.getElementById("sortSelect")
+  .addEventListener("change", updateCatalog);
+
+document.querySelectorAll("[data-category]")
+  .forEach(button => {
+    button.addEventListener("click", () => {
+      selectedCategory = button.dataset.category;
+
+      document.querySelectorAll("[data-category]")
+        .forEach(category => {
+          category.classList.toggle(
+            "active",
+            category === button
+          );
+        });
+
+      updateCatalog();
+    });
+  });
+
+function showMessage(text) {
+  const message = document.getElementById("globalMessage");
+  message.textContent = text;
+  message.style.display = "block";
+  message.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+}
+
+function openPage(name) {
+  const allowed = [
+    "home",
+    "games",
+    "popular",
+    "information",
+    "help",
+    "contact"
+  ];
+
+  if (!allowed.includes(name)) {
+    name = "home";
+  }
+
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.toggle(
+      "active",
+      page.id === "page-" + name
+    );
+  });
+
+  document.querySelectorAll(".nav button").forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.page === name
+    );
+  });
+
+  document.getElementById("navigation").classList.remove("open");
+
+  if (name === "games") {
+    updateCatalog();
+  }
+
+  history.replaceState(null, "", "#" + name);
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+document.querySelectorAll("[data-page]").forEach(element => {
+  element.addEventListener("click", event => {
+    event.preventDefault();
+    openPage(element.dataset.page);
+  });
+});
+
+document.querySelectorAll("[data-go]").forEach(button => {
+  button.addEventListener("click", () => {
+    openPage(button.dataset.go);
+  });
+});
+
+document.getElementById("menuToggle").addEventListener("click", () => {
+  document.getElementById("navigation").classList.toggle("open");
+});
+
+document.querySelectorAll("[data-demo]").forEach(button => {
+  button.addEventListener("click", () => {
+    showMessage(button.dataset.demo);
+  });
+});
+
+document.getElementById("contactForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const message = document.getElementById("contactMessage");
+
+  message.textContent =
+    "Simulasi berhasil. Pesan tidak dikirim atau disimpan.";
+
+  message.style.display = "block";
+
+  event.target.reset();
+});
+
+const initialPage = location.hash.slice(1);
+
+if (initialPage) {
+  openPage(initialPage);
+} else {
+  updateCatalog();
+}
+</script>
+
+</body>
+</html>
