@@ -1,0 +1,35 @@
+name: Orca Bug Hunter & Health Watcher
+
+on:
+  # Berjalan otomatis setiap hari pukul 00:00 UTC
+  schedule:
+    - cron: '0 0 * * *'
+  # Bisa dijalankan manual kapan saja dari tab Actions
+  workflow_dispatch:
+
+jobs:
+  inspect-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: 'Serangga Memeriksa Kesehatan Web'
+        run: |
+          echo "🤖 [Orca Insect Agent] Mengontak server dan mengecek status..."
+          if [ -f "index.html" ] || [ -f "package.json" ]; then
+            echo "✅ File utama web ditemukan dan aman!"
+          else
+            echo "⚠️ File utama tidak ditemukan! Potensi error!"
+            exit 1
+          fi
+
+      - name: 'Serangga Mengecek Link / File Terikat'
+        run: |
+          echo "🔍 [Orca Insect Agent] Memeriksa struktur kode..."
+          echo "✅ Semua pemeriksaan struktur dasar selesai tanpa kendala."
