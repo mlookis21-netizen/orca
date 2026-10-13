@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -887,11 +886,16 @@ $("signupForm").addEventListener("submit", async event => {
     if (error) throw error;
 
     if (result.session) {
-      showMessage("Akun berhasil dibuat dan kamu sudah masuk.", "success");
       form.reset();
       await refreshAccount();
+      closeAccountModal();
+      openPage("home");
+      showMessage("Akun berhasil dibuat. Selamat datang di IOSORCA!", "success", "globalMessage");
     } else {
-      showMessage("Pendaftaran diterima, tetapi sesi belum aktif. Periksa pengaturan konfirmasi email Supabase.", "error");
+      showMessage(
+        "Pendaftaran diterima, tetapi sesi login belum aktif. Coba masuk menggunakan email dan kata sandi. Jika tetap gagal, periksa pengaturan konfirmasi email Supabase.",
+        "error"
+      );
     }
   } catch (error) {
     showMessage(safeAuthError(error), "error");
@@ -950,9 +954,11 @@ $("loginForm").addEventListener("submit", async event => {
 
     if (result.error) throw result.error;
 
-    showMessage("Login berhasil. Selamat datang kembali!", "success");
     form.reset();
     await refreshAccount();
+    closeAccountModal();
+    openPage("home");
+    showMessage("Login berhasil. Selamat datang kembali di IOSORCA!", "success", "globalMessage");
   } catch (error) {
     showMessage("Login gagal. Periksa username/email dan kata sandi. Login username memerlukan Edge Function IOSORCA yang sudah dipasang.", "error");
   } finally {
