@@ -29,22 +29,22 @@ jobs:
           python -c "
           import os, glob
           from google import genai
+          
           api_key = os.environ.get('GEMINI_API_KEY')
           if not api_key:
-              print('❌ API Key tidak ditemukan!')
+              print('❌ API Key tidak ditemukan di GitHub Secrets!')
               exit(1)
 
           client = genai.Client(api_key=api_key)
           
-          # Mengambil file HTML/JS/CSS utama
           files = glob.glob('*.html') + glob.glob('*.js') + glob.glob('*.css')
           if not files:
-              print('⚠️ Tidak ada file web (HTML/JS/CSS) di root repositori.')
+              print('⚠️ Tidak ada file HTML/JS/CSS di root repositori. Pastikan file web sudah di-upload.')
               exit(0)
 
-          for f_path in files[:3]: # Cek maksimal 3 file dulu
+          for f_path in files[:3]:
               with open(f_path, 'r', encoding='utf-8', errors='ignore') as f:
-                  content = f.read(2000) # Baca 2000 karakter pertama
+                  content = f.read(2000)
               
               print(f'🤖 [Orca Insect] Memeriksa file: {f_path} ...')
               prompt = f'Kamu adalah bot pemeriksa web. Analisis singkat kode berikut dan berikan saran perbaikan/bug jika ada:\n\n{content}'
