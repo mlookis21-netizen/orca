@@ -22,7 +22,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install google-genai
 
-      - name: 'Serangga AI Memeriksa Kode (Debug Mode)'
+      - name: 'Serangga AI Memeriksa Kode'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
@@ -32,7 +32,7 @@ jobs:
               print('🔍 Memeriksa API Key...')
               api_key = os.environ.get('GEMINI_API_KEY')
               if not api_key:
-                  print('❌ API Key tidak ditemukan di GitHub Secrets!')
+                  print('❌ API Key tidak ditemukan!')
                   exit(1)
               print('✅ API Key terdeteksi.')
 
@@ -40,21 +40,25 @@ jobs:
               client = genai.Client(api_key=api_key)
               
               files = glob.glob('*.html') + glob.glob('*.js') + glob.glob('*.css')
-              print(files)
+              print(f'📁 File ditemukan: {files}')
+              
               if not files:
-                  print('⚠️ Tidak ada file HTML/JS/CSS di root repositori, tapi proses tetap dilanjutkan.')
+                  print('⚠️ Tidak ada file web di root repositori.')
               else:
                   for f_path in files[:3]:
                       with open(f_path, 'r', encoding='utf-8', errors='ignore') as f:
                           content = f.read(1000)
-                      print(f'🤖 Memeriksa file: {f_path}')
-                      prompt = f'Analisis singkat kode berikut:\n\n{content}'
+                      print(f'🤖 [Orca Insect] Memeriksa file: {f_path} ...')
+                      
                       response = client.models.generate_content(
-                          model='gemini-2.5-flash',
-                          contents=prompt,
+                          model='gemini-2.0-flash',
+                          contents=f'Kamu adalah bot pemeriksa web. Analisis singkat kode berikut dan berikan saran perbaikan/bug jika ada:\n\n{content}',
                       )
+                      print(f'--- Laporan AI untuk {f_path} ---')
                       print(response.text)
-              print('🎉 Proses selesai tanpa crash!')
+                      print('-----------------------------------\n')
+                      
+              print('🎉 Si Serangga berhasil menyelesaikan tugasnya!')
           except Exception as e:
               print('❌ TERJADI ERROR:')
               traceback.print_exc()
