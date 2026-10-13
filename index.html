@@ -622,7 +622,7 @@ if (window.supabase && window.supabase.createClient) {
 
 const $ = id => document.getElementById(id);
 
-const games = [
+const fallbackGames = [
   {name:"Gates of Olympus",provider:"Pragmatic Play",category:"Slot",icon:"⚡",art:"#8b6827"},
   {name:"Sweet Bonanza",provider:"Pragmatic Play",category:"Slot",icon:"🍬",art:"#9c477a"},
   {name:"Mahjong Ways",provider:"PG Soft",category:"Slot",icon:"🀄",art:"#a34e28"},
@@ -644,6 +644,62 @@ const games = [
   {name:"Neon Reels",provider:"CQ9",category:"Slot",icon:"🎰",art:"#6541a1"},
   {name:"Royal Fishing",provider:"JILI",category:"Arcade",icon:"🎣",art:"#347b8a"}
 ];
+
+  
+let games = [...fallbackGames];
+
+async function loadCatalog() {
+  if (!supabaseClient) return;
+
+  try {
+    const { data, error } = await supabaseClient
+      .from("iosorca_catalog")
+      .select(
+        "id, slug, name, provider, category, icon, color, image_url, description, is_featured, is_popular, is_active, sort_order"
+      )
+      .eq("is_active", true)
+      .order("sort_order", { ascending: true });
+
+    if (error) throw error;
+
+    games = (data || []).map(item => ({
+      id: item.id,
+      slug: item.slug,
+      name: item.name,
+      provider: item.provider,
+      category: item.category,
+      icon: item.icon || "🎮",
+      art: item.color || "#343843",
+      image_url: item.image_url || "",
+      description: item.description || "",
+      is_featured: item.is_featured,
+      is_popular: item.is_popular,
+      sort_order: item.sort_order
+    }));
+
+    $("gameCount").textContent = games.length;
+
+    renderGrid(
+      "featuredGrid",
+      games.filter(game => game.is_featured).slice(0, 5)
+    );
+
+    renderGrid(
+      "popularGrid",
+      games.filter(game => game.is_popular)
+    );
+
+    updateCatalog();
+  } catch (error) {
+    console.error("Gagal memuat katalog IOSORCA:", error);
+    showMessage(
+      "Katalog gagal dimuat dari server. Periksa izin tabel dan koneksi Supabase.",
+      "error",
+      "globalMessage"
+    );
+  }
+}
+
 
 let selectedCategory = "Semua";
 
