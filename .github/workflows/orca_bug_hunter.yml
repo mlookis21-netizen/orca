@@ -1,10 +1,8 @@
 name: Orca Bug Hunter & Health Watcher
 
 on:
-  # Berjalan otomatis setiap hari pukul 00:00 UTC
   schedule:
     - cron: '0 0 * * *'
-  # Bisa dijalankan manual kapan saja dari tab Actions
   workflow_dispatch:
 
 jobs:
@@ -14,22 +12,48 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js Environment
-        uses: actions/setup-node@v4
+      - name: Setup Python Environment
+        uses: actions/setup-python@v5
         with:
-          node-version: '18'
+          python-version: '3.10'
 
-      - name: 'Serangga Memeriksa Kesehatan Web'
+      - name: Install AI Library
         run: |
-          echo "🤖 [Orca Insect Agent] Mengontak server dan mengecek status..."
-          if [ -f "index.html" ] || [ -f "package.json" ]; then
-            echo "✅ File utama web ditemukan dan aman!"
-          else
-            echo "⚠️ File utama tidak ditemukan! Potensi error!"
-            exit 1
-          fi
+          python -m pip install --upgrade pip
+          pip install google-genai
 
-      - name: 'Serangga Mengecek Link / File Terikat'
+      - name: 'Serangga AI Memeriksa Kode'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          echo "🔍 [Orca Insect Agent] Memeriksa struktur kode..."
-          echo "✅ Semua pemeriksaan struktur dasar selesai tanpa kendala."
+          python -c "
+          import os, glob
+          from google import genai
+          api_key = os.environ.get('GEMINI_API_KEY')
+          if not api_key:
+              print('❌ API Key tidak ditemukan!')
+              exit(1)
+
+          client = genai.Client(api_key=api_key)
+          
+          # Mengambil file HTML/JS/CSS utama
+          files = glob.glob('*.html') + glob.glob('*.js') + glob.glob('*.css')
+          if not files:
+              print('⚠️ Tidak ada file web (HTML/JS/CSS) di root repositori.')
+              exit(0)
+
+          for f_path in files[:3]: # Cek maksimal 3 file dulu
+              with open(f_path, 'r', encoding='utf-8', errors='ignore') as f:
+                  content = f.read(2000) # Baca 2000 karakter pertama
+              
+              print(f'🤖 [Orca Insect] Memeriksa file: {f_path} ...')
+              prompt = f'Kamu adalah bot pemeriksa web. Analisis singkat kode berikut dan berikan saran perbaikan/bug jika ada:\n\n{content}'
+              
+              response = client.models.generate_content(
+                  model='gemini-2.5-flash',
+                  contents=prompt,
+              )
+              print(f'--- Laporan AI untuk {f_path} ---')
+              print(response.text)
+              print('-----------------------------------\n')
+          "
